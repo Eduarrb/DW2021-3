@@ -1,0 +1,41 @@
+body{
+    /* background-color: peru; */
+    margin: 0;
+}
+
+header{
+    border: 2px solid #2980b9;
+    height: 150px;
+    text-align: center;
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+section{
+    border: 2px solid #8e44ad;
+    display: flex;
+    flex-wrap: wrap;
+    /* width: 900px; */
+    /* box-sizing: border-box; */
+    justify-content: space-between;
+}
+
+article,
+aside{
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 30px;
+    height: 300px;
+    /* width: 449px; */
+    /* width: 50%; */
+    width: 47%;
+    box-sizing: border-box;
+}
+
+article{
+    border: 2px solid #e74c3c;
+}
+
+aside{
+    border: 2px solid #2c3e50;
+}
