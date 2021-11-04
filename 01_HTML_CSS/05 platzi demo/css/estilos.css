@@ -1,0 +1,25 @@
+body{
+    background-color: peru;
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+}
+nav{
+    background-color: #273b47;
+}
+nav img{
+    display: block;
+    width: 150px;
+}
+
+nav ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a{
+    text-decoration: none;
+    /* color: white; */
+    /* color: rgb(255,255,255); */
+    color: #ffffff;
+}
