@@ -1,20 +1,42 @@
+/* CONSTANTES */
+.contenedor{
+    /* 1920px de ancho */
+    /* 1600px de ancho */
+    /* 1366px de ancho */
+    /* width: 1600px; */
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 body{
-    background-color: peru;
+    /* background-color: peru; */
     margin: 0;
     font-family: 'Lato', sans-serif;
 }
+
+/* NAV */
 nav{
     background-color: #273b47;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
 }
 nav img{
     display: block;
-    width: 150px;
+    width: 100px;
 }
 
 nav ul{
     list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+}
+
+.bordeRight{
+    border-right: 2px solid white;
 }
 
 nav ul li a{
@@ -22,4 +44,31 @@ nav ul li a{
     /* color: white; */
     /* color: rgb(255,255,255); */
     color: #ffffff;
+    /* background-color: green; */
+    /* padding: 10px 10px 10px 10px; */
+    /* padding: 10px 10px; */
+    padding: 3px 25px;
+    display: inline-block;
+}
+
+/* .sesion{
+    border: 2px dotted blue;
+} */
+#sesion{
+    background-color: #ff4842;
+    border-radius: 10px;
+}
+
+/* HEADER */
+header{
+    background-color: #efefef;
+}
+/* header div{ */
+    
+    /* width: 1600px; */
+/* } */
+
+header div article img{
+    width: 100%;
+    display: block;
 }

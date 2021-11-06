@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- FONTAWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <link rel="stylesheet" href="css/estilos.css">
     <title>Platzi demo</title>
 </head>
@@ -15,26 +20,51 @@
         <img src="img/platzi-logo.png" alt="Platzi-logo">
         <!-- unorder list - order list -->
         <ul>
-            <li>
+            <li class="bordeRight">
                 <a href="#">Cursos</a>
             </li>
-            <li>
+            <li class="bordeRight">
                 <a href="#">Blog</a>
             </li>
-            <li>
+            <li class="bordeRight">
                 <a href="#">FAQ</a>
             </li>
-            <li>
+            <li class="bordeRight">
                 <a href="#">Horarios</a>
             </li>
             <li>
-                <a href="#">Live</a>
+                <a href="#" class="sesion">Live</a>
             </li>
             <li>
-                <a href="#">Inicia Sesión</a>
+                <a href="#" id="sesion" class="sesion">Inicia Sesión</a>
             </li>
         </ul>
         <!-- <ol></ol> -->
     </nav>
+    <header>
+        <div class="contenedor">
+            <form action="">
+                <input type="text" placeholder="Buscar...">
+                <button>
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+            <article>
+                <img src="img/arquitectura.jpg" alt="Arquitectura">
+                <div>
+                    <h2>Consejos que aumentarán tu efectividad al trabajar en casa</h2>
+                    <hr>
+                    <div>
+                        <span>
+                            <i class="fas fa-user"></i> Eduardo Arroyo
+                        </span>
+                        <span>
+                            05 nov 2021
+                        </span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </header>
 </body>
 </html>
