@@ -62,13 +62,74 @@ nav ul li a{
 /* HEADER */
 header{
     background-color: #efefef;
+    /* background-color: #4d4d4d; */
 }
-/* header div{ */
-    
-    /* width: 1600px; */
-/* } */
+
+header div form{
+    display: flex;
+    justify-content: flex-end;
+    /* margin: 5px 0; */
+    padding: 5px 0;
+}
+form input{
+    font-size: 16px;
+}
+
+form button{
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    width: 24px;
+    height: 24px;
+    margin-left: 5px;
+}
+
+header div article{
+    position: relative;
+}
 
 header div article img{
     width: 100%;
     display: block;
+}
+
+#flotante{
+    position: absolute;
+    bottom: 20px;
+    /* background-color: white; */
+    background-color: rgba(255,255,255,0.7);
+    left: 20px;
+    padding: 20px;
+    width: 50%;
+}
+#flotante h2{
+    margin: 0;
+}
+
+#flotante div{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* SECTION */
+
+section{
+    /* background-color: #4d4d4e; */
+    /* margin-top: 30px; */
+    padding: 30px 0;
+}
+.caja{
+    /* display: grid; */
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.item{
+    width: calc(100% / 3 - 20px);
+    margin-bottom: 30px;
+}
+.item img{
+    display: block;
+    width: 100%;
 }
