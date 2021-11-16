@@ -1,0 +1,41 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+a,
+a:link,
+a:visited {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/*
+font-family: 'Kaushan Script', cursive;
+font-family: 'Merriweather', serif;
+font-family: 'Montserrat', sans-serif;
+font-family: 'Roboto Slab', serif;
+*/
+.header {
+  background-image: url(../img/header-bg.jpg);
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+}
+.header__nav__contenedor--logo {
+  color: #fec503;
+  font-size: 2.8rem;
+  font-family: "Kaushan Script", cursive;
+}
+
+/*# sourceMappingURL=estilos.css.map */
