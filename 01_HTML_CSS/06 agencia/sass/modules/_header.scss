@@ -5,10 +5,27 @@
     height: 100vh;
     &__nav{ // & -> .header
         &__contenedor{ // & -> .header__nav
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             &--logo{ // & -> .header__nav__contenedor
                 color: #fec503;
                 font-size: 2.8rem; // -> 28px
                 font-family: $font-kaushan;
+            }
+            &__menu{
+                display: flex;
+                &__item{
+                    &--link{
+                        color: white;
+                        font-size: 1.4rem;
+                        text-transform: uppercase;
+                        font-family: $font-mont;
+                        padding: 1rem .5rem;
+                        // background-color: peru;
+                        display: inline-block;
+                    }
+                }
             }
         }
     }
