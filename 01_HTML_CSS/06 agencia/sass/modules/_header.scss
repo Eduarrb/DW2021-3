@@ -5,10 +5,14 @@
     height: 100vh;
     &__nav{ // & -> .header
         padding: 2.5rem 0;
+        // height: 9rem;
+        // display: flex;
+
         &__contenedor{ // & -> .header__nav
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 100%;
             // width: 80%;
             // max-width: 120rem;
             // margin-left: auto;
@@ -38,6 +42,26 @@
                     }
                 }
             }
+        }
+    }
+    &__bienvenida{
+        text-align: center;
+        color: white;
+        height: calc(100% - 9rem);
+        display: flex;
+        align-items: center;
+        &__contenedor{
+            &--subtitulo{
+                font-family: $font-merri;
+                font-size: 3.5rem;
+                font-style: italic;
+            }
+            &--titulo{
+                font-family: $font-mont;
+                font-size: 7.5rem;
+                text-transform: uppercase;
+            }
+            
         }
     }
 }

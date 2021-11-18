@@ -32,6 +32,26 @@ font-family: 'Roboto Slab', serif;
   margin-right: auto;
 }
 
+.btn {
+  display: inline-block;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 2rem 4rem;
+  border-radius: 0.5rem;
+}
+
+.btn-amarillo {
+  background-color: #fed136;
+  color: white;
+  transition: all 0.3s;
+}
+.btn-amarillo:hover {
+  background-color: #fbc204;
+  transition: all 0.3s;
+}
+
 .header {
   background-image: url(../img/header-bg.jpg);
   background-position: center;
@@ -45,6 +65,7 @@ font-family: 'Roboto Slab', serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 100%;
 }
 .header__nav__contenedor--logo {
   color: #fec503;
@@ -69,6 +90,23 @@ font-family: 'Roboto Slab', serif;
 .header__nav__contenedor__menu__item--link:hover {
   color: #fec503;
   transition: all 0.3s;
+}
+.header__bienvenida {
+  text-align: center;
+  color: white;
+  height: calc(100% - 9rem);
+  display: flex;
+  align-items: center;
+}
+.header__bienvenida__contenedor--subtitulo {
+  font-family: "Merriweather", serif;
+  font-size: 3.5rem;
+  font-style: italic;
+}
+.header__bienvenida__contenedor--titulo {
+  font-family: "Montserrat", sans-serif;
+  font-size: 7.5rem;
+  text-transform: uppercase;
 }
 
 /*# sourceMappingURL=estilos.css.map */
