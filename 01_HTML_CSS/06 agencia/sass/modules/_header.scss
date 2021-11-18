@@ -4,10 +4,15 @@
     background-size: cover;
     height: 100vh;
     &__nav{ // & -> .header
+        padding: 2.5rem 0;
         &__contenedor{ // & -> .header__nav
             display: flex;
             justify-content: space-between;
             align-items: center;
+            // width: 80%;
+            // max-width: 120rem;
+            // margin-left: auto;
+            // margin-right: auto;
             &--logo{ // & -> .header__nav__contenedor
                 color: #fec503;
                 font-size: 2.8rem; // -> 28px
@@ -16,6 +21,7 @@
             &__menu{
                 display: flex;
                 &__item{
+                    margin: 0 1rem;
                     &--link{
                         color: white;
                         font-size: 1.4rem;
@@ -24,6 +30,11 @@
                         padding: 1rem .5rem;
                         // background-color: peru;
                         display: inline-block;
+                        transition: all .3s;
+                        &:hover{
+                            color: #fec503;
+                            transition: all .3s;    
+                        }
                     }
                 }
             }
