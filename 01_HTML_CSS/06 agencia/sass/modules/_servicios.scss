@@ -1,0 +1,24 @@
+.servicios{
+    &__contenedor{
+        &__box{
+            display: flex;
+            justify-content: space-between;
+            &__item{
+                width: calc(100% / 3 - 2rem);
+                &--logo{
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 12.8rem;
+                    height: 12.8rem;
+                    background-color:#fec503;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: white;
+                    font-size: 6.4rem;
+                }
+            }
+        }
+    }
+}
