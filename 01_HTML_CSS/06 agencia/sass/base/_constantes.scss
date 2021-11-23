@@ -54,17 +54,20 @@ $font-roboto: 'Roboto Slab', serif;
 .titulo-n3{
     font-size: 2.4rem;
     font-family: $font-mont;
-    text-align: center;
+    // text-align: center;
 }
 .descri-n3{
     font-family: $font-roboto;
     font-size: 1.6rem;
-    text-align: center;
+    // text-align: center;
     line-height: 2.8rem;
     color: #6c757d;
 }
 .text-italic{
     font-style: italic;
+}
+.text-center{
+    text-align: center;
 }
 .mb-1{
     margin-bottom: 1rem;

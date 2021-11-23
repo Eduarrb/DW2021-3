@@ -70,19 +70,21 @@ font-family: 'Roboto Slab', serif;
 .titulo-n3 {
   font-size: 2.4rem;
   font-family: "Montserrat", sans-serif;
-  text-align: center;
 }
 
 .descri-n3 {
   font-family: "Roboto Slab", serif;
   font-size: 1.6rem;
-  text-align: center;
   line-height: 2.8rem;
   color: #6c757d;
 }
 
 .text-italic {
   font-style: italic;
+}
+
+.text-center {
+  text-align: center;
 }
 
 .mb-1 {
@@ -354,7 +356,6 @@ font-family: 'Roboto Slab', serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: scale(0);
   opacity: 0;
   visibility: hidden;
   transition: all 0.5s;
@@ -362,12 +363,43 @@ font-family: 'Roboto Slab', serif;
 .portafolio__contenedor__box__item__imgBox:hover div {
   opacity: 1;
   visibility: visible;
-  transform: scale(1);
   transition: all 0.5s;
 }
 .portafolio__contenedor__box__item__data {
   background-color: white;
   padding: 2rem 0;
+}
+
+.about__contenedor__timeline::before {
+  content: "";
+  width: 0.2rem;
+  background-color: #e9ecef;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.about__contenedor__timeline {
+  position: relative;
+}
+.about__contenedor__timeline__item {
+  position: relative;
+  height: 30rem;
+}
+.about__contenedor__timeline__item--imgBox {
+  position: absolute;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  border: 6px solid #e9ecef;
+  overflow: hidden;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.about__contenedor__timeline__item--imgBox img {
+  width: 100%;
+  display: block;
 }
 
 /*# sourceMappingURL=estilos.css.map */
