@@ -527,14 +527,42 @@ font-family: 'Roboto Slab', serif;
   text-align: center;
 }
 
+.equipo__contenedor__box {
+  display: flex;
+  justify-content: space-around;
+}
 .equipo__contenedor__box__item__imgBox {
   width: 22.5rem;
   height: 22.5rem;
   border: 6px solid #d4d4d4;
   border-radius: 50%;
+  margin-bottom: 2rem;
 }
 .equipo__contenedor__box__item__imgBox img {
   width: 100%;
+  border-radius: 50%;
+}
+.equipo__contenedor__box__item__socialMedia {
+  margin-top: 1rem;
+  text-align: center;
+}
+.equipo__contenedor__box__item__socialMedia a {
+  display: inline-block;
+  margin: 0 1rem;
+}
+.equipo__contenedor__box__item__socialMedia a i {
+  font-size: 1.5rem;
+  width: 4rem;
+  height: 4rem;
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.equipo__contenedor--descri {
+  padding: 0 19rem;
 }
 
 /*# sourceMappingURL=estilos.css.map */

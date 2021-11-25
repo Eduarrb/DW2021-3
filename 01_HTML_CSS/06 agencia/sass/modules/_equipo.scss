@@ -1,17 +1,46 @@
 .equipo{
     &__contenedor{
         &__box{
+            display: flex;
+            justify-content: space-around;
             &__item{
                 &__imgBox{
                     width: 22.5rem;
                     height: 22.5rem;
                     border: 6px solid #d4d4d4;
                     border-radius: 50%;
+                    margin-bottom: 2rem;
                     img{
                         width: 100%;
+                        border-radius: 50%;
+                    }
+                }
+                &__socialMedia{
+                    margin-top: 1rem;
+                    text-align: center;
+                    a{
+                        display: inline-block;
+                        margin: 0 1rem;
+                        // &:not(:last-child){
+                        //     margin-right: 2rem;
+                        // }
+                        i{
+                            font-size: 1.5rem;
+                            width: 4rem;
+                            height: 4rem;
+                            background-color: black;
+                            color: white;
+                            border-radius: 50%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
                     }
                 }
             }
+        }
+        &--descri{
+            padding: 0 19rem;
         }
     }
 }
