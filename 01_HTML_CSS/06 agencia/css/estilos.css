@@ -20,6 +20,10 @@ ul {
   list-style: none;
 }
 
+img {
+  display: block;
+}
+
 /*
 font-family: 'Kaushan Script', cursive;
 font-family: 'Merriweather', serif;
@@ -85,6 +89,10 @@ font-family: 'Roboto Slab', serif;
 
 .text-center {
   text-align: center;
+}
+
+.bg-section {
+  background-color: #eeeeee;
 }
 
 .mb-1 {
@@ -247,6 +255,86 @@ font-family: 'Roboto Slab', serif;
   padding-bottom: 10rem;
 }
 
+.pl-1 {
+  padding-left: 1rem;
+}
+
+.pl-2 {
+  padding-left: 2rem;
+}
+
+.pl-3 {
+  padding-left: 3rem;
+}
+
+.pl-4 {
+  padding-left: 4rem;
+}
+
+.pl-5 {
+  padding-left: 5rem;
+}
+
+.pl-6 {
+  padding-left: 6rem;
+}
+
+.pl-7 {
+  padding-left: 7rem;
+}
+
+.pl-8 {
+  padding-left: 8rem;
+}
+
+.pl-9 {
+  padding-left: 9rem;
+}
+
+.pl-10 {
+  padding-left: 10rem;
+}
+
+.pr-1 {
+  padding-right: 1rem;
+}
+
+.pr-2 {
+  padding-right: 2rem;
+}
+
+.pr-3 {
+  padding-right: 3rem;
+}
+
+.pr-4 {
+  padding-right: 4rem;
+}
+
+.pr-5 {
+  padding-right: 5rem;
+}
+
+.pr-6 {
+  padding-right: 6rem;
+}
+
+.pr-7 {
+  padding-right: 7rem;
+}
+
+.pr-8 {
+  padding-right: 8rem;
+}
+
+.pr-9 {
+  padding-right: 9rem;
+}
+
+.pr-10 {
+  padding-right: 10rem;
+}
+
 .header {
   background-image: url(../img/header-bg.jpg);
   background-position: center;
@@ -385,7 +473,6 @@ font-family: 'Roboto Slab', serif;
 }
 .about__contenedor__timeline__item {
   position: relative;
-  height: 30rem;
 }
 .about__contenedor__timeline__item--imgBox {
   position: absolute;
@@ -399,7 +486,45 @@ font-family: 'Roboto Slab', serif;
 }
 .about__contenedor__timeline__item--imgBox img {
   width: 100%;
-  display: block;
+}
+.about__contenedor__timeline__item__panel {
+  width: 33%;
+  padding-bottom: 7rem;
+}
+.about__contenedor__timeline__item:nth-child(even) {
+  /*
+  &__panel{ & -> &__item:nth-child(odd)__panel
+
+  }
+  div:nth-child(even){
+
+  }
+
+  */
+}
+.about__contenedor__timeline__item:nth-child(even) .about__contenedor__timeline__item__panel {
+  margin-left: auto;
+  margin-right: 7%;
+}
+.about__contenedor__timeline__item:nth-child(odd) .about__contenedor__timeline__item__panel {
+  text-align: right;
+  margin-left: 7%;
+}
+.about__contenedor__timeline .lastItem {
+  height: 15rem;
+}
+.about__contenedor__timeline .lastItem div {
+  background-color: #ffc800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.about__contenedor__timeline .lastItem div p {
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
 }
 
 /*# sourceMappingURL=estilos.css.map */
