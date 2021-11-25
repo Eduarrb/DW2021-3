@@ -527,4 +527,14 @@ font-family: 'Roboto Slab', serif;
   text-align: center;
 }
 
+.equipo__contenedor__box__item__imgBox {
+  width: 22.5rem;
+  height: 22.5rem;
+  border: 6px solid #d4d4d4;
+  border-radius: 50%;
+}
+.equipo__contenedor__box__item__imgBox img {
+  width: 100%;
+}
+
 /*# sourceMappingURL=estilos.css.map */

@@ -1,0 +1,17 @@
+.equipo{
+    &__contenedor{
+        &__box{
+            &__item{
+                &__imgBox{
+                    width: 22.5rem;
+                    height: 22.5rem;
+                    border: 6px solid #d4d4d4;
+                    border-radius: 50%;
+                    img{
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
