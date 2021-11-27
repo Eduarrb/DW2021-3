@@ -15,6 +15,9 @@ $font-roboto: 'Roboto Slab', serif;
     max-width: 120rem;
     margin-left: auto;
     margin-right: auto;
+    @media only screen and (max-width: $bp-large){
+        max-width: 72rem;
+    }
 }
 
 .btn{
@@ -27,6 +30,8 @@ $font-roboto: 'Roboto Slab', serif;
     font-weight: 700;
     padding: 2rem 4rem;
     border-radius: .5rem;
+    border: none;
+    cursor: pointer;
 }
 
 .btn-amarillo{
@@ -63,6 +68,9 @@ $font-roboto: 'Roboto Slab', serif;
     line-height: 2.8rem;
     color: #6c757d;
 }
+.text-white{
+    color: white;
+}
 .text-italic{
     font-style: italic;
 }
@@ -71,6 +79,9 @@ $font-roboto: 'Roboto Slab', serif;
 }
 .bg-section{
     background-color: #eeeeee;
+}
+.height-100{
+    height: 100%;
 }
 .mb-1{
     margin-bottom: 1rem;

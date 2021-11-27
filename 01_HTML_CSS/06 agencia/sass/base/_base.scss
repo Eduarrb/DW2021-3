@@ -1,3 +1,16 @@
+/* BREAKPOINTS */
+// 1200px / 16 = 75em
+// 992px / 16 = 62em
+// 768px / 16 = 48em
+// 576px / 16 = 36em
+// 480px
+// 320px
+// $bp-extraLarge: 75em;
+$bp-large: 62em;
+$bp-medium: 48em;
+$bp-small: 36em;
+/**********************************/
+
 *,
 *::before,
 *::after{

@@ -1,3 +1,5 @@
+/* BREAKPOINTS */
+/**********************************/
 *,
 *::before,
 *::after {
@@ -35,6 +37,11 @@ font-family: 'Roboto Slab', serif;
   margin-left: auto;
   margin-right: auto;
 }
+@media only screen and (max-width: 62em) {
+  .contenedor {
+    max-width: 72rem;
+  }
+}
 
 .btn {
   display: inline-block;
@@ -44,6 +51,8 @@ font-family: 'Roboto Slab', serif;
   font-weight: 700;
   padding: 2rem 4rem;
   border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
 }
 
 .btn-amarillo {
@@ -83,6 +92,10 @@ font-family: 'Roboto Slab', serif;
   color: #6c757d;
 }
 
+.text-white {
+  color: white;
+}
+
 .text-italic {
   font-style: italic;
 }
@@ -93,6 +106,10 @@ font-family: 'Roboto Slab', serif;
 
 .bg-section {
   background-color: #eeeeee;
+}
+
+.height-100 {
+  height: 100%;
 }
 
 .mb-1 {
@@ -358,6 +375,11 @@ font-family: 'Roboto Slab', serif;
 .header__nav__contenedor__menu {
   display: flex;
 }
+@media only screen and (max-width: 62em) {
+  .header__nav__contenedor__menu {
+    display: none;
+  }
+}
 .header__nav__contenedor__menu__item {
   margin: 0 1rem;
 }
@@ -373,6 +395,25 @@ font-family: 'Roboto Slab', serif;
 .header__nav__contenedor__menu__item--link:hover {
   color: #fec503;
   transition: all 0.3s;
+}
+.header__nav__contenedor--btn {
+  background-color: #fec503;
+  font-size: 1.2rem;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  padding: 1rem;
+  border-radius: 0.3rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: none;
+}
+@media only screen and (max-width: 62em) {
+  .header__nav__contenedor--btn {
+    display: block;
+  }
+}
+.header__nav__contenedor--btn i {
+  margin-left: 0.5rem;
 }
 .header__bienvenida {
   text-align: center;
@@ -424,6 +465,11 @@ font-family: 'Roboto Slab', serif;
 .portafolio__contenedor__box__item {
   width: calc(33.3333333333% - 2rem);
   margin-bottom: 3rem;
+}
+@media only screen and (max-width: 62em) {
+  .portafolio__contenedor__box__item {
+    width: calc(50% - 1.5rem);
+  }
 }
 .portafolio__contenedor__box__item__imgBox {
   position: relative;
@@ -483,6 +529,12 @@ font-family: 'Roboto Slab', serif;
   overflow: hidden;
   left: 50%;
   transform: translateX(-50%);
+}
+@media only screen and (max-width: 62em) {
+  .about__contenedor__timeline__item--imgBox {
+    width: 10rem;
+    height: 10rem;
+  }
 }
 .about__contenedor__timeline__item--imgBox img {
   width: 100%;
@@ -563,6 +615,38 @@ font-family: 'Roboto Slab', serif;
 }
 .equipo__contenedor--descri {
   padding: 0 19rem;
+}
+
+.contacto {
+  background-color: #212529;
+  background-image: url(../img/map-image.png);
+  background-size: cover;
+  background-position: center;
+}
+.contacto__contenedor__form {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.contacto__contenedor__form__col {
+  width: calc(50% - 1.5rem);
+}
+.contacto__contenedor__form__col__formGroup:not(:last-child) {
+  margin-bottom: 2rem;
+}
+.contacto__contenedor__form__col__formGroup input,
+.contacto__contenedor__form__col__formGroup textarea {
+  width: 100%;
+  font-family: "Roboto Slab", serif;
+  font-size: 1.6rem;
+  border: none;
+  outline: 0;
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+.contacto__contenedor__form__btnBox {
+  width: 100%;
+  text-align: center;
 }
 
 /*# sourceMappingURL=estilos.css.map */
