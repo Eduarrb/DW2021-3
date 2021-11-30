@@ -565,6 +565,11 @@ font-family: 'Roboto Slab', serif;
 .about__contenedor__timeline .lastItem {
   height: 15rem;
 }
+@media only screen and (max-width: 62em) {
+  .about__contenedor__timeline .lastItem {
+    height: 10rem;
+  }
+}
 .about__contenedor__timeline .lastItem div {
   background-color: #ffc800;
   display: flex;
@@ -578,10 +583,26 @@ font-family: 'Roboto Slab', serif;
   font-weight: 700;
   text-align: center;
 }
+@media only screen and (max-width: 62em) {
+  .about__contenedor__timeline .lastItem div p {
+    font-size: 1.3rem;
+    padding: 0 0.6rem;
+  }
+}
 
 .equipo__contenedor__box {
   display: flex;
   justify-content: space-around;
+}
+@media only screen and (max-width: 62em) {
+  .equipo__contenedor__box {
+    flex-direction: column;
+  }
+}
+@media only screen and (max-width: 62em) {
+  .equipo__contenedor__box__item:not(:last-child) {
+    margin-bottom: 5rem;
+  }
 }
 .equipo__contenedor__box__item__imgBox {
   width: 22.5rem;
@@ -589,6 +610,12 @@ font-family: 'Roboto Slab', serif;
   border: 6px solid #d4d4d4;
   border-radius: 50%;
   margin-bottom: 2rem;
+}
+@media only screen and (max-width: 62em) {
+  .equipo__contenedor__box__item__imgBox {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 .equipo__contenedor__box__item__imgBox img {
   width: 100%;

@@ -64,6 +64,9 @@
             }
             .lastItem{
                 height: 15rem;
+                @media only screen and (max-width: $bp-large){
+                    height: 10rem;
+                }
                 div{
                     background-color: #ffc800;
                     display: flex;
@@ -75,6 +78,10 @@
                         font-size: 1.8rem;
                         font-weight: 700;
                         text-align: center;
+                        @media only screen and (max-width: $bp-large){
+                            font-size: 1.3rem;
+                            padding: 0 .6rem;
+                        }
                     }
                 }
             }
