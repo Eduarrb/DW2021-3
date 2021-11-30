@@ -53,6 +53,9 @@
         }
         &--descri{
             padding: 0 19rem;
+            @media only screen and (max-width: $bp-large){
+                padding: 0;
+            }
         }
     }
 }

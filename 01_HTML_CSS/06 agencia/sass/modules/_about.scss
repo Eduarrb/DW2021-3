@@ -10,6 +10,9 @@
             // left: calc(50% - 10rem);
             left: 50%;
             transform: translateX(-50%);
+            @media only screen and (max-width: $bp-medium){
+                left: 4rem;
+            }
         }
         &__timeline{
             position: relative;
@@ -29,6 +32,11 @@
                         width: 10rem;
                         height: 10rem;
                     }
+                    @media only screen and (max-width: $bp-medium){
+                        width: 8rem;
+                        height: 8rem;
+                        left: 4rem;
+                    }
                     img{
                         width: 100%;
                         // display: block;
@@ -38,6 +46,10 @@
                 &__panel{
                     width: 33%;
                     padding-bottom: 7rem;
+                    @media only screen and (max-width: $bp-medium){
+                        width: auto;
+                        // width: 100%;
+                    }
                 }
             }
             &__item:nth-child(even){
@@ -54,18 +66,28 @@
                     // background-color: peru;
                     margin-left: auto;
                     margin-right: 7%;
+                    @media only screen and (max-width: $bp-medium){
+                        margin-left: 10rem;
+                    }
                 }
             }
             &__item:nth-child(odd){
                 .about__contenedor__timeline__item__panel{
                     text-align: right;
                     margin-left: 7%;
+                    @media only screen and (max-width: $bp-medium){
+                        text-align: left;
+                        margin-left: 10rem;
+                    }
                 }
             }
             .lastItem{
                 height: 15rem;
                 @media only screen and (max-width: $bp-large){
                     height: 10rem;
+                }
+                @media only screen and (max-width: $bp-medium){
+                    height: 8rem;
                 }
                 div{
                     background-color: #ffc800;
@@ -81,6 +103,9 @@
                         @media only screen and (max-width: $bp-large){
                             font-size: 1.3rem;
                             padding: 0 .6rem;
+                        }
+                        @media only screen and (max-width: $bp-medium){
+                            font-size: 1rem;
                         }
                     }
                 }
