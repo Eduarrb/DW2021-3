@@ -3,12 +3,13 @@
 // 992px / 16 = 62em
 // 768px / 16 = 48em
 // 576px / 16 = 36em
-// 480px
+// 480px / 16 = 30em
 // 320px
 // $bp-extraLarge: 75em;
 $bp-large: 62em;
 $bp-medium: 48em;
 $bp-small: 36em;
+$bp-extraSmall: 30em;
 /**********************************/
 
 *,
@@ -29,6 +30,10 @@ html{
     // 16px === 100%
     // 10px == ?
     font-size: 62.5%; // ---> 10px
+    @media only screen and (max-width: $bp-extraSmall){
+        // 8px
+        font-size: 50%;
+    }
 }
 
 a,
