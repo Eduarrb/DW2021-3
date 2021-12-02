@@ -12,6 +12,32 @@ window.addEventListener('scroll', function(){
         nav.classList.add('active');
     }
     else{
-        nav.classList.remove('active')
+        nav.classList.remove('active');
     }
 });
+
+const btnMenu = document.querySelector('.header__nav__contenedor--btn');
+
+const menu = document.querySelector('.header__nav__contenedor__menu');
+
+btnMenu.addEventListener('click', function(){
+    // console.log('click');
+    menu.classList.toggle('active');
+});
+/*
+12 = 12 💥💥💥💥💥
+12 == 12 👍👍
+12 === 12 👍👍👍
+*/
+
+/*
+let k = 0
+btnMenu.addEventListener('click', function(){
+    if (k % 2 == 0) {
+        menu.classList.add('active');
+    } else {
+        menu.classList.remove('active');     
+    }
+k += 1;
+})
+*/
