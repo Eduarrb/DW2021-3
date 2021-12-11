@@ -1,68 +1,59 @@
 /* ⚡⚡ FUNCIONES ⚡⚡ */
-/*
-let a = 10;
-console.log(a);
-let b = a;
-console.log(b)
-a = 11;
-console.log(a, b);
-
-var c;
-console.log(c)
-*/
-// saludar();
-
-function saludar(){
-    console.log('Hola queridos amigos');
-}
-
 saludar();
 
-let fechaNacimiento = 2000;
+// ⭐⭐⭐⭐⭐
+function saludar(){
+    /* AQUI VA EL CÓDIGO QUE DEBE EJECUTAR LA FUNCION */
+    console.log('Hola a todos');
+    /* imprima en un div el saludo */
+}
 
-// ⚡⚡ PARAMETROS & ARGUMENTOS
+const fechaNacimiento = 1990;
 
-// 💡💡 PARAMETRO
-function obtenerEdad(fechaN){
-    const edad = 2021 - fechaN;
+// parametro
+function obtenerEdad(fechaNacimiento){
+    // PROPIO AMBITO, CONTEXTO O SCOPE
+    let edad = 2021 - fechaNacimiento;
     console.log(edad);
 }
 
-// 💡💡 ARGUMENTO
-obtenerEdad(fechaNacimiento);
+// argumentos
+obtenerEdad(1973);
 
+const fechaNacimiento2 = 2000;
 
-let edad1 = 31;
-
-function obtenerEdad2(fechaN){
-    // 💡💡 LAS FUNCIONES MANEJAN SU PROPIO SCOPE -> AMBITO O CONTEXTO
-    // let edad2 = 45;
-    edad1 = 45;
-    console.log(edad1);
+function obtenerEdad2(fechaNac){
+    let edad = 2030 - fechaNacimiento2;
+    console.log(edad);
 }
 
 obtenerEdad2();
-console.log(edad1);
-// console.log(edad2);
 
-function sumar (a, b){
-    let resultado = a + b;
-    // console.log(resultado);
-    return `El resultado es ${resultado}`;
+function saludar2(nombre){
+    let saludo = `Buenas noches ${nombre}`;
+    document.querySelector('.saludo').textContent = saludo;
 }
 
-console.log(sumar(4, 9)); // -> 13
+// saludar2(jaimito); 💥💥💥
+// saludar2('Jaimito');
+// saludar2(222222);
 
-const suma = sumar(2,2);
-console.log(suma)
+let nombre = 'Jaimito';
 
-function operar(a,b){
-    let resultado1 = a + b;
-    let resultado2 = a - b;
-    let resultado3 = a * b;
-    // return [resultado1, resultado2, resultado3];
-    // document.querySelector('.ciudades').innerHTML = `${resultado1} ${resultado2} ${resultado3}`;
-    return `EL resultado de sumar ${a} y ${b} es ${resultado1}`;
+saludar2(nombre);
+
+function sumar(a, b){
+    let res = a + b;
+    return res;
 }
-const resArray = operar(2,3);
-console.log(resArray);
+
+//sumar(5,2); // flotando
+console.log(sumar(5,2));
+
+let respuesta1 = sumar(1,3);
+console.log(respuesta1);
+
+function resultadosExamen(){
+    console.log(`la nota es ${respuesta1}`);
+}
+resultadosExamen();
