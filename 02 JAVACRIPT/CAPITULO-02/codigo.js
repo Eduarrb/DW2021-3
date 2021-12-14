@@ -20,4 +20,28 @@ btn.addEventListener('click', () => {
     }
 });
 
-// EVENT DELEGATION
+
+// 💡💡 es un tipo de objeto muy parecido a un array
+/*
+const listaTareas = document.querySelectorAll('li');
+console.log(listaTareas);
+for(let i = 0; i < listaTareas.length; i++){
+    // console.log(listaTareas[i]);
+    listaTareas[i].addEventListener('click', () => {
+        // console.log('hiciste click');
+        listaTareas[i].remove();
+    });
+}
+*/
+
+// ⚡⚡ EVENT DELEGATION ⚡⚡
+// 💡💡 delegar el evento a una instancia superior
+
+ul.addEventListener('click', evento => {
+    // console.log('hiciste click');
+    // console.log(evento.target.tagName);
+    if(evento.target.tagName === 'LI'){
+        // console.log('ejecuta una accion');
+        evento.target.remove();
+    }
+});
