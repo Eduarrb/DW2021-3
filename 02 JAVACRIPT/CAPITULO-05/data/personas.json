@@ -1,0 +1,10 @@
+{
+    "persona01": {
+        "nombre": "Juan",
+        "apellido": "Quispe"
+    },
+    "persona02":{
+        "nombre": "Lucia",
+        "apellido": "Jimenez"
+    }
+}
