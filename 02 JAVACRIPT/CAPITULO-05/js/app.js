@@ -24,7 +24,7 @@ const obtenerJson = async function(artista){
     try {
         // await -> esperar
         // const data = await fetch('https://api.discogs.com/artists/1/releases?page=2&per_page=75');
-        const data = await fetch(`https://api.discogs.com/database/search?q=${artista}&type=master&artist=${artista}&format=album&token=ONLrTDOVgWmHwYPITLBlyGebTdDtoywnoCPfIzvU`);
+        const data = await fetch(`https://api.discogs.com/database/search?q=${artista}&type=master&artist=${artista}&format=album&token=<aqui tu token>`);
         // console.log(data);
         const resultado = await data.json();
 
