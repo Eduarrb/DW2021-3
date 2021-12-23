@@ -159,3 +159,27 @@ SELECT
 SELECT COUNT(*) AS cantidad, peli_genero FROM peliculas GROUP BY peli_genero
 
 SELECT COUNT(*) AS cantidad, peli_genero FROM peliculas WHERE peli_genero = 'accion' GROUP BY peli_genero
+
+SELECT COUNT(*) AS cantidad, peli_restricciones FROM peliculas GROUP BY peli_restricciones
+
+-- ⚡⚡ COMODINES
+SELECT * FROM peliculas WHERE peli_nombre LIKE "A%"
+
+SELECT * FROM peliculas WHERE peli_nombre LIKE "%r"
+
+SELECT * FROM peliculas WHERE peli_nombre LIKE "%ma%"
+
+SELECT * FROM peliculas WHERE peli_nombre LIKE "_l%"
+
+-- ⚡⚡ BETWEEN
+-- MOSTRAR PELICULAS ENTRE 1987 HASTA 2017
+
+SELECT * FROM peliculas ORDER BY peli_estreno
+
+SELECT * FROM peliculas WHERE peli_estreno BETWEEN "1987-01-01" AND "2017-12-31"
+
+SELECT * FROM peliculas WHERE peli_estreno BETWEEN "1987-01-01" AND "2017-12-31" ORDER BY peli_estreno
+
+SELECT * FROM peliculas WHERE peli_estreno BETWEEN "1987-01-01" AND "2017-12-31" AND peli_nombre LIKE "M%" ORDER BY peli_nombre
+
+
