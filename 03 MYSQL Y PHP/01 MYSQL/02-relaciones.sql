@@ -98,7 +98,7 @@ SELECT
             WHERE peliculas.peli_dire_id = directores.dire_id
 
 -- 4 TABLAS
-SELECT peli_nombre
+SELECT peli_nombre, dire_nombres, dire_apellidos, act_nombres, act_apellidos
     FROM peliculas, personajes, actores, directores
         WHERE peliculas.peli_id = personajes.per_peli_id
             AND personajes.per_act_id = actores.act_id
