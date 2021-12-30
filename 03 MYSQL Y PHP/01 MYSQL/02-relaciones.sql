@@ -103,3 +103,34 @@ SELECT peli_nombre, dire_nombres, dire_apellidos, act_nombres, act_apellidos
         WHERE peliculas.peli_id = personajes.per_peli_id
             AND personajes.per_act_id = actores.act_id
             AND peliculas.peli_dire_id = directores.dire_id
+
+-- ⚡⚡ ALIAS PARA LAS TABLAS
+
+SELECT *
+    FROM actores a, personajes b 
+        WHERE a.act_id = b.per_act_id
+
+-- (NOMBRES Y APELLIDOS DEL ACTOR UN SOLO CAMPO), PERSONAJE
+SELECT
+    FROM
+        WHERE
+
+SELECT 
+    CONCAT(a.act_nombres, ' ', a.act_apellidos) AS actor,
+    b.per_nombre
+    FROM actores a, personajes b
+        WHERE a.act_id = b.per_act_id
+
+-- NOMBRE DE LA PELICULA | DIRECTOR (UN SOLO CAMPO) | ACTORES (UN SOLO CAMPO)
+-- PERSONAJES | LIMITE PELICULAS EN ORDEN ASCENDENTE
+
+SELECT
+    a.peli_nombre,
+    CONCAT(c.dire_nombres, ' ', c.dire_apellidos) AS director,
+    CONCAT(b.act_nombres, ' ', b.act_apellidos) AS actor,
+    d.per_nombre
+    FROM peliculas a, actores b, directores c, personajes d
+        WHERE a.peli_id = d.per_peli_id 
+            AND a.peli_dire_id = c.dire_id
+            AND b.act_id = d.per_act_id
+                ORDER BY a.peli_nombre ASC
