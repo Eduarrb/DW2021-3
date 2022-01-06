@@ -16,16 +16,30 @@
             <a href="./" class="btn btn-info">Regresar</a>
         </div>
         <div class="row justify-content-center">
-            <h4 class="text-center col-md-12">Ingresa los datos de la pelicula a subir</h4>
-            <!-- METODOS: POST - GET -->
+            <h4 class="text-center col-md-12">Actualizar datos de pelicula</h4>
+            
+            <?php
+                if(isset($_GET['id'])){
+                    $peli_id = $_GET['id'];
+                    $query = "SELECT * FROM peliculas WHERE peli_id = {$peli_id}";
+                    $query_res = mysqli_query($conexion, $query);
+                    if(!$query_res){
+                        die("Fallo en la conexión " . mysqli_error($conexion));
+                    }
+
+                    $fila = mysqli_fetch_array($query_res);
+                    // print_r($fila);
+                }
+            
+            ?>
             <form action="" class="col-md-6" method="post">
                 <div class="form-group">
                     <label for="peli_nombre">Nombre de pelicula</label>
-                    <input type="text" name="peli_nombre" id="peli_nombre" class="form-control">
+                    <input type="text" name="peli_nombre" id="peli_nombre" class="form-control" value="<?php echo $fila['peli_nombre']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="peli_genero">Género</label>
-                    <input type="text" name="peli_genero" id="peli_genero" class="form-control">
+                    <input type="text" name="peli_genero" id="peli_genero" class="form-control" value="<?php echo $fila['peli_genero']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="peli_estreno">Fecha de estreno</label>

@@ -23,7 +23,7 @@
         </div>
         <div class="row">
             <?php
-                $query = "SELECT a.peli_nombre, a.peli_estreno, CONCAT(b.dire_nombres, ' ', b.dire_apellidos) AS director, a.peli_restricciones FROM peliculas a INNER JOIN directores b ON a.peli_dire_id = b.dire_id";
+                $query = "SELECT a.peli_id, a.peli_nombre, a.peli_estreno, CONCAT(b.dire_nombres, ' ', b.dire_apellidos) AS director, a.peli_restricciones, a.peli_img FROM peliculas a INNER JOIN directores b ON a.peli_dire_id = b.dire_id";
                 $query_resultado = mysqli_query($conexion, $query);
 
                 // echo $query_resultado;
@@ -48,8 +48,8 @@
                     // print_r($fila);
                     // echo "<h1>{$fila['peli_nombre']}</h1>";
                     ?>
-                        <div class="col-md-3 mb-3">
-                            <img src="https://img.ecartelera.com/noticias/fotos/66900/66992/2.jpg" alt="" style="width: 100%; display: block;">
+                        <div class="col-md-3 mb-4">
+                            <img src="<?php echo $fila['peli_img']; ?>" alt="" style="width: 100%; display: block;">
                             <h4 class="text-info"><?php echo $fila['peli_nombre']; ?></h4>
                             <div>
                                 <strong>Fecha</strong>: <?php echo $fila['peli_estreno']; ?>
@@ -59,6 +59,10 @@
                             </div>
                             <div>
                                 <strong>Rating</strong>: <?php echo $fila['peli_restricciones']; ?>
+                            </div>
+                            <div class="mt-1">
+                                <a href="editar.php?id=<?php echo $fila['peli_id']; ?>" class="btn btn-small btn-info">editar</a>
+                                <a href="borrar.php?id=<?php echo $fila['peli_id']; ?>" class="btn btn-small btn-danger">borrar</a>
                             </div>
                         </div>
                 <?php }
