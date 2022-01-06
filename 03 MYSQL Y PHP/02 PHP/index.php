@@ -18,6 +18,9 @@
     -->
     <h1 class="text-center pt-5 pb-5 bg-primary text-white">Bienvenidos a Pelicomic</h1>
     <section class="container">
+        <div class="row p-4">
+            <a href="subir.php" class="btn btn-success">Cargar</a>
+        </div>
         <div class="row">
             <?php
                 $query = "SELECT a.peli_nombre, a.peli_estreno, CONCAT(b.dire_nombres, ' ', b.dire_apellidos) AS director, a.peli_restricciones FROM peliculas a INNER JOIN directores b ON a.peli_dire_id = b.dire_id";
@@ -45,8 +48,8 @@
                     // print_r($fila);
                     // echo "<h1>{$fila['peli_nombre']}</h1>";
                     ?>
-                        <div class="col-md-3">
-                            <img src="http://placehold.it/200x400" alt="">
+                        <div class="col-md-3 mb-3">
+                            <img src="https://img.ecartelera.com/noticias/fotos/66900/66992/2.jpg" alt="" style="width: 100%; display: block;">
                             <h4 class="text-info"><?php echo $fila['peli_nombre']; ?></h4>
                             <div>
                                 <strong>Fecha</strong>: <?php echo $fila['peli_estreno']; ?>
