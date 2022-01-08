@@ -1,4 +1,5 @@
 <?php include "conexion.php"; ?>
+<?php ob_start(); ?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -84,7 +85,7 @@
                     if(!$query_guardar_res){
                         die("Fallo en la conexión " . mysqli_error($conexion));
                     }
-
+                    header("Location: ./");
                 }
             ?>
         </div>

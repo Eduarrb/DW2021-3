@@ -1,4 +1,5 @@
 <?php include "conexion.php"; ?>
+<?php ob_start(); ?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -43,62 +44,68 @@
                 </div>
                 <div class="form-group">
                     <label for="peli_estreno">Fecha de estreno</label>
-                    <input type="date" name="peli_estreno" id="peli_estreno" class="form-control">
+                    <input type="date" name="peli_estreno" id="peli_estreno" class="form-control" value="<?php echo $fila['peli_estreno']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="peli_restricciones">Restricciones</label>
-                    <input type="text" name="peli_restricciones" id="peli_restricciones" class="form-control">
+                    <input type="text" name="peli_restricciones" id="peli_restricciones" class="form-control" value="<?php echo $fila['peli_restricciones']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="peli_img">Imagen URL</label>
-                    <input type="text" name="peli_img" id="peli_img" class="form-control">
+                    <div>
+                        <img src="<?php echo $fila['peli_img']; ?>" alt="<?php echo $fila['peli_nombre']; ?>" width="200">
+                    </div>
+                    <input type="text" name="peli_img" id="peli_img" class="form-control" value="<?php echo $fila['peli_img']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="peli_dire_id">Director</label>
                     <select name="peli_dire_id" id="peli_dire_id" class="form-control">
                         <?php
-                            $query = "SELECT * FROM directores";
-                            $query_resultado = mysqli_query($conexion, $query);
-
-                            if(!$query_resultado){
+                            $query_dire = "SELECT * FROM directores";
+                            $query_dire_resultado = mysqli_query($conexion, $query_dire);
+                            if(!$query_dire_resultado){
                                 die("Fallo en la conexión " . mysqli_error($conexion));
                             }
-
-                            while($fila = mysqli_fetch_array($query_resultado)){
-                                ?>
-
-                                    <option value="<?php echo $fila['dire_id']; ?>">
-                                        <?php echo $fila['dire_nombres'] . " " . $fila['dire_apellidos']; ?>
-                                    </option>
-
-                            <?php }
-                        
+                            while($fila_dire = mysqli_fetch_array($query_dire_resultado)){
+                                $dire_id = $fila_dire['dire_id'];
+                                $director = $fila_dire['dire_nombres'] . " " . $fila_dire['dire_apellidos'];
+                                if($dire_id == $fila['peli_dire_id']){
+                                    ?>
+                                        <option selected value="<?php echo $dire_id; ?>">
+                                            <?php echo $director; ?>
+                                        </option>
+                                <?php }
+                                else {
+                                    ?>
+                                        <option value="<?php echo $dire_id; ?>">
+                                                <?php echo $director; ?>
+                                        </option>
+                                <?php }
+                            }
                         ?>
                         <!-- <option value="2">Ridley ScotT</option> -->
                     </select>
                 </div>
                 <div class="form-group text-center">
-                    <input type="submit" value="Guardar" class="btn btn-primary" name="guardar">
+                    <input type="submit" value="Guardar" class="btn btn-primary" name="editar">
                 </div>
             </form>
             <?php
-                if(isset($_POST['guardar'])){
-                    // echo 'funcionaaaaaaaa';
+                if(isset($_POST['editar'])){
                     $peli_nombre = $_POST['peli_nombre'];
-                    // echo $peli_nombre;
                     $peli_genero = $_POST['peli_genero'];
                     $peli_estreno = $_POST['peli_estreno'];
                     $peli_restricciones = $_POST['peli_restricciones'];
                     $peli_dire_id = $_POST['peli_dire_id'];
                     $peli_img = $_POST['peli_img'];
 
-                    $query_guardar = "INSERT INTO peliculas (peli_nombre, peli_genero, peli_estreno, peli_restricciones, peli_dire_id, peli_img) VALUES ('{$peli_nombre}', '{$peli_genero}', '{$peli_estreno}', '{$peli_restricciones}', {$peli_dire_id}, '{$peli_img}')";
-                    $query_guardar_res = mysqli_query($conexion, $query_guardar);
-
-                    if(!$query_guardar_res){
+                    // echo 'funciona';
+                    $query_update = "UPDATE peliculas SET peli_nombre = '{$peli_nombre}', peli_genero = '{$peli_genero}', peli_estreno = '{$peli_estreno}', peli_restricciones = '{$peli_restricciones}', peli_dire_id = {$peli_dire_id}, peli_img = '{$peli_img}' WHERE peli_id = {$peli_id}";
+                    $query_up_res = mysqli_query($conexion, $query_update);
+                    if(!$query_up_res){
                         die("Fallo en la conexión " . mysqli_error($conexion));
                     }
-
+                    header("Location: ./");
                 }
             ?>
         </div>

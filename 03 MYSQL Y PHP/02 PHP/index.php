@@ -1,4 +1,5 @@
 <?php include "conexion.php"; ?>
+<?php ob_start(); ?>
 
 <!DOCTYPE html>
 <html lang="es">
