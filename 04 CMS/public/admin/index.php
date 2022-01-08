@@ -2,15 +2,11 @@
 <?php include(TEMPLATE_BACK . DS . "head.php"); ?>
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <!-- Sidebar -->
         <?php include(TEMPLATE_BACK . DS . "sidebar.php"); ?>
-        
         <!-- End of Sidebar -->
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
             <!-- Main Content -->
             <div id="content">
 
@@ -30,5 +26,4 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <?php include(TEMPLATE_BACK . DS . "footer.php"); ?>
-            
+            <?php include(TEMPLATE_BACK . DS . "footer.php"); ?> 
