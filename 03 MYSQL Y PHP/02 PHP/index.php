@@ -21,6 +21,8 @@
     <section class="container">
         <div class="row p-4">
             <a href="subir.php" class="btn btn-success">Cargar</a>
+            <a href="directores.php" class="btn btn-info ml-2">Directores</a>
+
         </div>
         <div class="row">
             <?php
