@@ -4,6 +4,9 @@
 
 <div class="row">
     <div class="col-md-6">
+        <div>
+            <?php mostrar_msj(); ?>
+        </div>
         <?php categorias_agregar(); ?>
         <form action="" method="post">
             <div class="form-group">
@@ -14,5 +17,23 @@
                 <input type="submit" value="Guardar" class="btn btn-primary" name="guardar">
             </div>
         </form>
+        <?php
+            if(isset($_GET['edit'])){
+                include(TEMPLATE_BACK . DS . "categorias_edit.php");
+            }
+        ?>
+    </div>
+    <div class="col-md-6">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre Categoría</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php show_categorias_admin(); ?>
+            </tbody>
+        </table>
     </div>
 </div>
