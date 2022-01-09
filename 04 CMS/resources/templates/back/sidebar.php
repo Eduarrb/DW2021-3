@@ -22,7 +22,7 @@
             <hr class="sidebar-divider">
 
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="index.php?categorias">
                     <i class="far fa-calendar-check"></i>
                     <span>Categorias</span></a>
             </li>

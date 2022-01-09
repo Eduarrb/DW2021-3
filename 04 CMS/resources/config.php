@@ -1,4 +1,5 @@
 <?php
+    ob_start();
     // if (a > b) {
     //     echo 'a es mayor';
     // }

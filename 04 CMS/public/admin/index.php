@@ -18,6 +18,12 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+                    <?php
+                        if(isset($_GET['categorias'])){
+                            include(TEMPLATE_BACK . DS . "categorias.php");
+                        }
+                    
+                    ?>
 
                 </div>
                 <!-- /.container-fluid -->
