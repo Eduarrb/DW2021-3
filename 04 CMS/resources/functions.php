@@ -90,11 +90,31 @@ DELIMITADOR;
                         <a href="index.php?categorias&edit={$fila['cat_id']}" class="btn btn-small btn-success">editar</a>
                     </td>
                     <td>
-                        <a href="#" class="btn btn-small btn-danger">borrar</a>
+                        <a href="javascript:void(0)" class="btn btn-small btn-danger delete_link" rel="{$fila['cat_id']}">borrar</a>
                     </td>
                 </tr>
 DELIMITADOR;
             echo $categorias;
+        }
+    }
+
+    function categoria_editar($id){
+        if(isset($_POST['editar'])){
+            $cat_nombre = limpiar_string(trim($_POST['cat_nombre']));
+            $query = query("UPDATE categorias SET cat_nombre = '{$cat_nombre}' WHERE cat_id = {$id}");
+            confirmar($query);
+            set_mensaje(display_success_msj("Categoría actualizada correctamente 😁"));
+            redirect("index.php?categorias");
+        }
+    }
+    
+    function categoria_delete(){
+        if(isset($_GET['delete'])){
+            $id = limpiar_string(trim($_GET['delete']));
+            $query = query("DELETE FROM categorias WHERE cat_id = {$id}");
+            confirmar($query);
+            set_mensaje(display_success_msj("Categoria eliminada correctamente 👍"));
+            redirect("index.php?categorias");
         }
     }
 ?>
