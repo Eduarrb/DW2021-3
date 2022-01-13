@@ -36,4 +36,8 @@ INSERT INTO noticias (noti_cat_id, noti_titulo, noti_resumen, noti_contenido, no
 (1, "Curso profesional de PHP", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam enim reprehenderit optio porro quam impedit est deleniti natus, quasi dolor.", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam enim reprehenderit optio porro quam impedit est deleniti natus, quasi dolor.", "2022-01-10", "01.png", "John Smith", "publicado"),
 (12, "Curso profesional de Javascript", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam enim reprehenderit optio porro quam impedit est deleniti natus, quasi dolor.", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam enim reprehenderit optio porro quam impedit est deleniti natus, quasi dolor.", "2022-01-10", "02.png", "Eduardo Arroyo", "publicado")
 
+SELECT noti_id, noti_img, noti_fecha, noti_titulo, noti_resumen FROM noticias WHERE noti_status = 'publicado' ORDER BY noti_id DESC LIMIT 1
 
+SELECT noti_id, noti_img, noti_fecha, noti_titulo, noti_resumen FROM noticias WHERE noti_id != 2 ORDER BY noti_id DESC
+
+SELECT DAY(noti_fecha) as dia, MONTH(noti_fecha) as mes, YEAR(noti_fecha) as anio FROM noticias
