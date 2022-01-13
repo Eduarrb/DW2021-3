@@ -41,3 +41,5 @@ SELECT noti_id, noti_img, noti_fecha, noti_titulo, noti_resumen FROM noticias WH
 SELECT noti_id, noti_img, noti_fecha, noti_titulo, noti_resumen FROM noticias WHERE noti_id != 2 ORDER BY noti_id DESC
 
 SELECT DAY(noti_fecha) as dia, MONTH(noti_fecha) as mes, YEAR(noti_fecha) as anio FROM noticias
+
+SELECT * FROM noticias a INNER JOIN categorias b ON a.noti_cat_id = b.cat_id ORDER BY a.noti_id DESC
