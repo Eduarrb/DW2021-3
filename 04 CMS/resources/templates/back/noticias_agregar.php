@@ -7,11 +7,11 @@
         <form action="" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="noti_titulo">Título</label>
-                <input type="text" name="noti_titulo" id="noti_titulo" class="form-control">
+                <input type="text" name="noti_titulo" id="noti_titulo" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="noti_autor">Autor</label>
-                <input type="text" name="noti_autor" id="noti_autor" class="form-control">
+                <input type="text" name="noti_autor" id="noti_autor" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="noti_cat_id">Categoría</label>
@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
                 <label for="noti_img">Imagen</label>
-                <input type="file" name="noti_img" id="noti_img" class="form-control">
+                <input type="file" name="noti_img" id="noti_img" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="noti_status">Estado</label>

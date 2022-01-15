@@ -30,10 +30,10 @@
                     
                     <!-- Nested row for non-featured blog posts-->
                     <div class="row">
-                        <div class="col-lg-6">
+                        <!-- <div class="col-lg-6"> -->
                             <!-- Blog post-->
                             <?php noticias_mostrar_resto($ultimo_id); ?>
-                        </div>
+                        <!-- </div> -->
                     </div>
                     <!-- Pagination-->
                     <nav aria-label="Pagination">

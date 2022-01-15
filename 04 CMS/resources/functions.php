@@ -95,18 +95,20 @@ DELIMITADOR;
     }
 
     function noticias_mostrar_resto($id_excluyente){
-        $query = query("SELECT noti_id, noti_img, noti_fecha, noti_titulo, noti_resumen FROM noticias WHERE noti_id != {$id_excluyente} ORDER BY noti_id DESC");
+        $query = query("SELECT noti_id, noti_img, noti_fecha, noti_titulo, noti_resumen FROM noticias WHERE noti_id != {$id_excluyente} AND noti_status = 'publicado' ORDER BY noti_id DESC");
         confirmar($query);
         while($fila = fetch_array($query)){
             $fecha_res = fecha_formato($fila['noti_fecha']);
             $noticias = <<<DELIMITADOR
-                <div class="card mb-4">
-                    <a href="post.php?id={$fila['noti_id']}"><img class="card-img-top" src="img/{$fila['noti_img']}" alt="{$fila['noti_titulo']}" /></a>
-                    <div class="card-body">
-                        <div class="small text-muted">{$fecha_res}</div>
-                        <h2 class="card-title h4">{$fila['noti_titulo']}</h2>
-                        <p class="card-text">{$fila['noti_resumen']}</p>
-                        <a class="btn btn-primary" href="post.php?id={$fila['noti_id']}">Leer más →</a>
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <a href="post.php?id={$fila['noti_id']}"><img class="card-img-top" src="img/{$fila['noti_img']}" alt="{$fila['noti_titulo']}" /></a>
+                        <div class="card-body">
+                            <div class="small text-muted">{$fecha_res}</div>
+                            <h2 class="card-title h4">{$fila['noti_titulo']}</h2>
+                            <p class="card-text">{$fila['noti_resumen']}</p>
+                            <a class="btn btn-primary" href="post.php?id={$fila['noti_id']}">Leer más →</a>
+                        </div>
                     </div>
                 </div>
 DELIMITADOR;
@@ -183,7 +185,7 @@ DELIMITADOR;
                     <td>{$fila['noti_fecha']}</td>
                     <td>{$fila['noti_status']}</td>
                     <td>{$fila['noti_vistas']}</td>
-                    <td><a href="#" class="btn btn-small btn-success">editar</a></td>
+                    <td><a href="index.php?noticias_editar&edit={$fila['noti_id']}" class="btn btn-small btn-success">editar</a></td>
                     <td><a href="#" class="btn btn-small btn-danger">borrar</a></td>
                 </tr>
 DELIMITADOR;
@@ -213,7 +215,84 @@ DELIMITADOR;
             $noti_img_tmp = $_FILES['noti_img']['tmp_name'];
             $noti_status = limpiar_string(trim($_POST['noti_status']));
 
+            // gatito.png => [gatito, png]
+            // 35486784354.png
+            $noti_img = md5(uniqid()) . "." . explode('.', $noti_img)[1];
+
             move_uploaded_file($noti_img_tmp, "../img/{$noti_img}");
+
+            $query = query("INSERT INTO noticias(noti_cat_id, noti_titulo, noti_resumen, noti_contenido, noti_fecha, noti_img, noti_autor, noti_status) VALUES ({$noti_cat_id}, '{$noti_titulo}', '{$noti_resumen}', '{$noti_contenido}', NOW(), '{$noti_img}', '{$noti_autor}', '{$noti_status}')");
+            confirmar($query);
+            set_mensaje(display_success_msj('La notica fue guardada exitosamente'));
+            redirect('index.php?noticias');
+        }
+    }
+
+    function mostrar_noticia_editar(){
+        if(isset($_GET['noticias_editar']) && isset($_GET['edit'])){
+            $id = limpiar_string(trim($_GET['edit']));
+            $query = query("SELECT * FROM noticias WHERE noti_id = {$id}");
+            confirmar($query);
+            return $fila = fetch_array($query);
+        }
+        else{
+            redirect('index.php?noticias');
+        }
+    }
+
+    function mostrar_options_cat_editar($table_cat_id){
+        $query = query("SELECT * FROM categorias");
+        confirmar($query);
+        while($fila = fetch_array($query)){
+            $cat_id = $fila['cat_id'];
+            $cat_nombre = $fila['cat_nombre'];
+
+            if($cat_id == $table_cat_id){
+                ?>
+                    <option value="<?php echo $cat_id; ?>" selected><?php echo $cat_nombre; ?></option>
+            <?php }
+            else{
+                ?>
+                    <option value="<?php echo $cat_id; ?>"><?php echo $cat_nombre; ?></option>
+            <?php }
+        }
+    }
+
+    function mostrar_options_status_editar($table_estado){
+        if($table_estado == 'publicado'){
+            ?>
+                <option value="pendiente">pendiente</option>
+        <?php }
+        else{
+            ?>
+                <option value="publicado">publicado</option>
+        <?php }
+    }
+
+    function noticia_editar($noti_id, $img){
+        if(isset($_POST['editar'])){
+            $noti_titulo = limpiar_string(trim($_POST['noti_titulo']));
+            $noti_autor = limpiar_string(trim($_POST['noti_autor']));
+            $noti_cat_id = limpiar_string(trim($_POST['noti_cat_id']));
+            $noti_resumen = limpiar_string(trim($_POST['noti_resumen']));
+            $noti_contenido = limpiar_string(trim($_POST['noti_contenido']));
+            $noti_img = limpiar_string(trim($_FILES['noti_img']['name']));
+            $noti_img_tmp = $_FILES['noti_img']['tmp_name'];
+            $noti_status = limpiar_string(trim($_POST['noti_status']));
+
+            if(empty($noti_img)){
+                $noti_img = $img;
+            } else {
+                $imgLocation = "../img/{$img}";
+                unlink($imgLocation);
+                $noti_img = md5(uniqid()) . "." . explode('.', $noti_img)[1];
+                move_uploaded_file($noti_img_tmp, "../img/{$noti_img}");
+            }
+
+            $query = query("UPDATE noticias SET noti_cat_id = {$noti_cat_id}, noti_titulo = '{$noti_titulo}', noti_resumen = '{$noti_resumen}', noti_contenido = '{$noti_contenido}', noti_img = '{$noti_img}', noti_autor = '{$noti_autor}', noti_status = '{$noti_status}' WHERE noti_id = {$noti_id}");
+            confirmar($query);
+            set_mensaje(display_success_msj('Noticia actualizada correctamente'));
+            redirect('index.php?noticias');
         }
     }
 ?>
