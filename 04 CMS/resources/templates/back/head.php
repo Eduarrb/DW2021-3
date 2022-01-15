@@ -19,6 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="https://cdn.tiny.cloud/1/i7333ti0ulwjf7tjj5m2pxoewnow6iywff87xklpyfz6asu5/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
 
 </head>

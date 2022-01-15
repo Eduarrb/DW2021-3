@@ -26,6 +26,9 @@
                         if(isset($_GET['noticias'])){
                             include(TEMPLATE_BACK . DS . "noticias.php");
                         }
+                        if(isset($_GET['noticias_agregar'])){
+                            include(TEMPLATE_BACK . DS . "noticias_agregar.php");
+                        }
                     
                     ?>
 

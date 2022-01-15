@@ -190,4 +190,30 @@ DELIMITADOR;
             echo $noticias;
         }
     }
+
+    function categorias_mostrar_options(){
+        $query = query("SELECT * FROM categorias");
+        confirmar($query);
+        while($fila = fetch_array($query)){
+            $categorias = <<<DELIMITADOR
+                <option value="{$fila['cat_id']}">{$fila['cat_nombre']}</option>
+DELIMITADOR;
+            echo $categorias;
+        }
+    }
+
+    function noticia_agregar(){
+        if(isset($_POST['guardar'])){
+            $noti_titulo = limpiar_string(trim($_POST['noti_titulo']));
+            $noti_autor = limpiar_string(trim($_POST['noti_autor']));
+            $noti_cat_id = limpiar_string(trim($_POST['noti_cat_id']));
+            $noti_resumen = limpiar_string(trim($_POST['noti_resumen']));
+            $noti_contenido = limpiar_string(trim($_POST['noti_contenido']));
+            $noti_img = limpiar_string(trim($_FILES['noti_img']['name']));
+            $noti_img_tmp = $_FILES['noti_img']['tmp_name'];
+            $noti_status = limpiar_string(trim($_POST['noti_status']));
+
+            move_uploaded_file($noti_img_tmp, "../img/{$noti_img}");
+        }
+    }
 ?>
