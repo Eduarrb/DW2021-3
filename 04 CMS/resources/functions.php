@@ -119,9 +119,24 @@ DELIMITADOR;
     function noticia_individual_mostrar(){
         if(isset($_GET['id'])){
             $id = limpiar_string(trim($_GET['id']));
+            $query = query("UPDATE noticias SET noti_vistas = noti_vistas + 1 WHERE noti_id = {$id}");
+            confirmar($query);
             $query = query("SELECT * FROM noticias WHERE noti_id = {$id}");
             confirmar($query);
             return $fila = fetch_array($query);
+        }
+    }
+
+    function comentario_crear($noti_id){
+        if(isset($_POST['enviar'])){
+            $com_nombre = limpiar_string(trim($_POST['com_nombre']));
+            $com_email = limpiar_string(trim($_POST['com_email']));
+            $com_mensaje = limpiar_string(trim($_POST['com_mensaje']));
+
+            $query = query("INSERT INTO comentarios(com_noti_id, com_nombre, com_email, com_mensaje, com_status, com_fecha) VALUES ({$noti_id}, '{$com_nombre}', '{$com_email}', '{$com_mensaje}', 'pendiente', NOW())");
+            confirmar($query);
+            set_mensaje(display_success_msj('Tu comentario a sido enviado satisfactoriamente. Espere la aprobación del admin'));
+            redirect("post.php?id={$noti_id}");
         }
     }
 

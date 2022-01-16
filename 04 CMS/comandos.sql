@@ -43,3 +43,13 @@ SELECT noti_id, noti_img, noti_fecha, noti_titulo, noti_resumen FROM noticias WH
 SELECT DAY(noti_fecha) as dia, MONTH(noti_fecha) as mes, YEAR(noti_fecha) as anio FROM noticias
 
 SELECT * FROM noticias a INNER JOIN categorias b ON a.noti_cat_id = b.cat_id ORDER BY a.noti_id DESC
+
+CREATE TABLE comentarios(
+    com_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    com_noti_id INT NOT NULL,
+    com_nombre VARCHAR(100) NOT NULL,
+    com_email VARCHAR(100) NOT NULL,
+    com_mensaje TEXT NOT NULL,
+    com_status VARCHAR(25),
+    com_fecha DATETIME NOT NULL
+)
