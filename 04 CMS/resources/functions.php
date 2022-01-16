@@ -116,6 +116,15 @@ DELIMITADOR;
         }
     }
 
+    function noticia_individual_mostrar(){
+        if(isset($_GET['id'])){
+            $id = limpiar_string(trim($_GET['id']));
+            $query = query("SELECT * FROM noticias WHERE noti_id = {$id}");
+            confirmar($query);
+            return $fila = fetch_array($query);
+        }
+    }
+
     // ⚡⚡ FUNCIONES ADMIN
     function categorias_agregar(){
         if(isset($_POST['guardar'])){
@@ -141,7 +150,7 @@ DELIMITADOR;
                         <a href="index.php?categorias&edit={$fila['cat_id']}" class="btn btn-small btn-success">editar</a>
                     </td>
                     <td>
-                        <a href="javascript:void(0)" class="btn btn-small btn-danger delete_link" rel="{$fila['cat_id']}">borrar</a>
+                        <a href="javascript:void(0)" class="btn btn-small btn-danger delete_link" rel="{$fila['cat_id']}" table="categorias">borrar</a>
                     </td>
                 </tr>
 DELIMITADOR;
@@ -159,13 +168,14 @@ DELIMITADOR;
         }
     }
     
-    function categoria_delete(){
+    // ⚡⚡ funcion global para eliminar data
+    function elemento_delete($tabla, $campo){
         if(isset($_GET['delete'])){
             $id = limpiar_string(trim($_GET['delete']));
-            $query = query("DELETE FROM categorias WHERE cat_id = {$id}");
+            $query = query("DELETE FROM {$tabla} WHERE {$campo} = {$id}");
             confirmar($query);
-            set_mensaje(display_success_msj("Categoria eliminada correctamente 👍"));
-            redirect("index.php?categorias");
+            set_mensaje(display_success_msj("Elemento eliminado correctamente 👍"));
+            redirect("index.php?{$tabla}");
         }
     }
 
@@ -176,8 +186,8 @@ DELIMITADOR;
             $noticias = <<<DELIMITADOR
                 <tr>
                     <td>{$fila['noti_id']}</td>
+                    <td><a href="../categorias.php?id={$fila['noti_cat_id']}" target="_blank">{$fila['cat_nombre']}</a></td>
                     <td><a href="../post.php?id={$fila['noti_id']}" target="_blank">{$fila['noti_titulo']}</a></td>
-                    <td>{$fila['noti_titulo']}</td>
                     <td>{$fila['noti_autor']}</td>
                     <td>{$fila['noti_resumen']}</td>
                     <td>{$fila['noti_contenido']}</td>
@@ -186,7 +196,7 @@ DELIMITADOR;
                     <td>{$fila['noti_status']}</td>
                     <td>{$fila['noti_vistas']}</td>
                     <td><a href="index.php?noticias_editar&edit={$fila['noti_id']}" class="btn btn-small btn-success">editar</a></td>
-                    <td><a href="#" class="btn btn-small btn-danger">borrar</a></td>
+                    <td><a href="javascript:void(0)" class="btn btn-small btn-danger delete_link" rel="{$fila['noti_id']}" table="noticias">borrar</a></td>
                 </tr>
 DELIMITADOR;
             echo $noticias;

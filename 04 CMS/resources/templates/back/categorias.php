@@ -22,7 +22,7 @@
                 include(TEMPLATE_BACK . DS . "categorias_edit.php");
             }
             
-            categoria_delete();
+            elemento_delete("categorias", "cat_id");
         ?>
     </div>
     <div class="col-md-6">
@@ -39,16 +39,4 @@
         </table>
     </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $(".delete_link").on('click', function(){
-            const id = $(this).attr('rel');
-            const delete_url = "index.php?categorias&delete=" + id;
-            $(".modal-title").html("Borrar Categoria");
-            $(".modal-body").html("¿Estas seguro de borrar el elemento?");
-            $(".btn_delete_link").attr("href", delete_url);
-            $("#deleteModal").modal('show');
-        });
-    })
-</script>
 
