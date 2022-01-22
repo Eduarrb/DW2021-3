@@ -61,7 +61,7 @@
                                         <input type="submit" value="Enviar" class="btn btn-primary" name="enviar">
                                     </div>
                                 </form>
-                                <?php //comentario_crear($fila['noti_id']); ?>
+                                <?php comentario_crear($fila['noti_id']); ?>
                                 <!-- Comment with nested comments-->
                                 <div class="d-flex mb-4">
                                     <!-- Parent comment-->

@@ -43,6 +43,16 @@
         }
     }
 
+    function display_success_msjV5($msj){
+        $msj = <<<DELIMITADOR
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Holy guacamole!</strong> $msj
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+DELIMITADOR;
+        return $msj;
+    }
+
     function display_success_msj($msj){
         $msj = <<<DELIMITADOR
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -135,7 +145,7 @@ DELIMITADOR;
 
             $query = query("INSERT INTO comentarios(com_noti_id, com_nombre, com_email, com_mensaje, com_status, com_fecha) VALUES ({$noti_id}, '{$com_nombre}', '{$com_email}', '{$com_mensaje}', 'pendiente', NOW())");
             confirmar($query);
-            set_mensaje(display_success_msj('Tu comentario a sido enviado satisfactoriamente. Espere la aprobación del admin'));
+            set_mensaje(display_success_msjV5('Tu comentario a sido enviado satisfactoriamente. Espere la aprobación del admin'));
             redirect("post.php?id={$noti_id}");
         }
     }
