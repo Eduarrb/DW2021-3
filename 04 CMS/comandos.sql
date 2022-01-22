@@ -53,3 +53,27 @@ CREATE TABLE comentarios(
     com_status VARCHAR(25),
     com_fecha DATETIME NOT NULL
 )
+
+SELECT 
+    a.com_id,
+    b.noti_titulo,
+    a.com_nombre,
+    a.com_email,
+    a.com_mensaje,
+    a.com_fecha,
+    a.com_status
+    FROM comentarios a
+        INNER JOIN noticias b ON a.com_noti_id = b.noti_id
+        WHERE a.com_status = 'pendiente' ORDER BY a.com_id DESC
+
+CREATE TABLE usuarios (
+    user_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    user_nombres VARCHAR(255) NOT NULL,
+    user_apellidos VARCHAR(255) NOT NULL,
+    user_email VARCHAR(255) NOT NULL,
+    user_img TEXT, 
+    user_pass VARCHAR(255) NOT NULL,
+    user_token TEXT,
+    user_status TINYINT DEFAULT 0,
+    user_rol VARCHAR(100) NOT NULL
+)

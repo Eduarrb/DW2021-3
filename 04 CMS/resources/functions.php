@@ -134,6 +134,8 @@ DELIMITADOR;
             $query = query("SELECT * FROM noticias WHERE noti_id = {$id}");
             confirmar($query);
             return $fila = fetch_array($query);
+        } else {
+            redirect('./');
         }
     }
 
@@ -147,6 +149,23 @@ DELIMITADOR;
             confirmar($query);
             set_mensaje(display_success_msjV5('Tu comentario a sido enviado satisfactoriamente. Espere la aprobación del admin'));
             redirect("post.php?id={$noti_id}");
+        }
+    }
+
+    function comentarios_mostrar($noti_id){
+        $query = query("SELECT * FROM comentarios WHERE com_noti_id = {$noti_id} AND com_status = 'aprobado'");
+        confirmar($query);
+        while($fila = fetch_array($query)){
+            $comentarios = <<<DELIMITADOR
+                <div class="d-flex mb-4">
+                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                    <div class="ms-3">
+                        <div class="fw-bold">{$fila['com_nombre']}</div>
+                        {$fila['com_mensaje']}
+                    </div>
+                </div>
+DELIMITADOR;
+            echo $comentarios;
         }
     }
 
@@ -328,6 +347,43 @@ DELIMITADOR;
             confirmar($query);
             set_mensaje(display_success_msj('Noticia actualizada correctamente'));
             redirect('index.php?noticias');
+        }
+    }
+
+    function comentarios_mostrar_admin(){
+        $query = query("SELECT a.com_id, b.noti_id, b.noti_titulo, a.com_nombre, a.com_email, a.com_mensaje, a.com_fecha, a.com_status FROM comentarios a INNER JOIN noticias b ON a.com_noti_id = b.noti_id WHERE a.com_status = 'pendiente' ORDER BY a.com_id DESC");
+        confirmar($query);
+        while($fila = fetch_array($query)){
+            $comentarios = <<<DELIMITADOR
+                <tr>
+                    <td>{$fila['com_id']}</td>
+                    <td>
+                        <a href="../post.php?id={$fila['noti_id']}">{$fila['noti_titulo']}</a>
+                    </td>
+                    <td>{$fila['com_nombre']}</td>
+                    <td>{$fila['com_email']}</td>
+                    <td>{$fila['com_mensaje']}</td>
+                    <td>{$fila['com_fecha']}</td>
+                    <td>{$fila['com_status']}</td>
+                    <td>
+                        <a href="index.php?comentarios&aprobar={$fila['com_id']}" class="btn btn-small btn-success">aprobar</a>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" class="btn btn-small btn-danger delete_link" rel="{$fila['com_id']}" table="comentarios">borrar</a>
+                    </td>
+                </tr>
+DELIMITADOR;
+            echo $comentarios;
+        }
+    }
+
+    function comentario_aprobar(){
+        if(isset($_GET['aprobar'])){
+            $com_id = limpiar_string(trim($_GET['aprobar']));
+            $query = query("UPDATE comentarios SET com_status = 'aprobado' WHERE com_id = {$com_id}");
+            confirmar($query);
+            set_mensaje(display_success_msj('Comentario aprobado correctamente 😁😁'));
+            redirect('index.php?comentarios');
         }
     }
 ?>

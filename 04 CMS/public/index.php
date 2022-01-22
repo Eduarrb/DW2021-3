@@ -25,15 +25,13 @@
                     <?php
                         $ultimo_id;
                         noticia_mostrar_ultimo();
-
                     ?>
-                    
+            
                     <!-- Nested row for non-featured blog posts-->
                     <div class="row">
-                        <!-- <div class="col-lg-6"> -->
-                            <!-- Blog post-->
-                            <?php noticias_mostrar_resto($ultimo_id); ?>
-                        <!-- </div> -->
+                        <!-- Blog post-->
+                        <?php noticias_mostrar_resto($ultimo_id); ?>
+
                     </div>
                     <!-- Pagination-->
                     <nav aria-label="Pagination">

@@ -32,6 +32,9 @@
                         if(isset($_GET['noticias_editar'])){
                             include(TEMPLATE_BACK . DS . "noticias_editar.php");
                         }
+                        if(isset($_GET['comentarios'])){
+                            include(TEMPLATE_BACK . DS . "comentarios.php");
+                        }
                     
                     ?>
 

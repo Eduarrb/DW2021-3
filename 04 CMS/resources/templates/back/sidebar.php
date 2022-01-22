@@ -32,6 +32,12 @@
                     <i class="fas fa-vote-yea"></i>
                     <span>Noticias</span></a>
             </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="index.php?comentarios">
+                    <i class="far fa-comment-alt"></i>
+                    <span>Comentarios</span></a>
+            </li>
             <!-- Heading -->
             <div class="sidebar-heading">
                 Interface
