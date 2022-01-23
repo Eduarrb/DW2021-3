@@ -95,6 +95,33 @@ DELIMITADOR;
         }
         return false;
     }
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
+
+    //Load Composer's autoloader
+    require 'vendor/autoload.php';
+
+    function send_email($email, $asunto, $mensaje, $headers = null){
+        $mail = new PHPMailer();
+        $mail->isSMTP();
+        $mail->Host = 'smtp.mailtrap.io';
+        $mail->SMTPAuth = true;
+        $mail->Username = '<usuario mailtrap>';
+        $mail->Password = '<password mailtrap>';
+        $mail->Port = 465;
+        $mail->SMTPSecure = 'tls';
+        $mail->isHTML(true);
+        $mail->CharSet = "UTF-8";
+
+        $mail->setFrom('from@example.com', 'Mailer');
+        $mail->addAddress($email);
+        $mail->Subject = $asunto;
+        $mail->Body = $mensaje;
+        if($mail->send()){
+            $emailSent = true;
+        }
+    }
 
     // ⚡⚡ FUNCIONES FRONT
     function validar_user_reg(){
@@ -136,12 +163,29 @@ DELIMITADOR;
                     echo display_danger_msj($error);
                 }
             } else {
-                // registrar al usuario
+                if(registro_usuario($user_nombres, $user_apellidos, $user_email, $user_pass)){
+                    set_mensaje(display_success_msj("Registro satisfactorio, por favor revisa tu correo o spam para la activación de tu cuenta. Esto puede tardar unos minutos"));
+                    redirect("register.php");
+                } else {
+                    set_mensaje(display_danger_msj("Lo sentimos, no pudimos registrar tu cuenta. Intentelo más tarde"));
+                    redirect("register.php");
+                }
             }
-            
-
         }
+    }
 
+    function registro_usuario($nombres, $apellidos, $correo, $pass){
+        $user_nombres = limpiar_string(trim($nombres));
+        $user_apellidos = limpiar_string(trim($apellidos));
+        $user_email = limpiar_string(trim($correo));
+        $user_pass = limpiar_string(trim($pass));
+
+        $user_pass = password_hash($user_pass, PASSWORD_BCRYPT, array('cost' => 12));
+        $query = query("INSERT INTO usuarios (user_nombres, user_apellidos, user_email, user_pass, user_rol) VALUES ('{$user_nombres}', '{$user_apellidos}', '{$user_email}', '{$user_pass}', 'suscriptor')");
+        confirmar($query);
+        return true;
+        // return false;
+        // mas codigo de registro
     }
 
     function show_categorias(){

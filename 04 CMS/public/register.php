@@ -24,25 +24,25 @@
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="text" class="form-control form-control-user" id="user_nombres" name="user_nombres"
-                                            placeholder="Nombres">
+                                            placeholder="Nombres" required>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" id="user_apellidos" name="user_apellidos"
-                                            placeholder="Apellidos">
+                                            placeholder="Apellidos" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-user" id="user_email" name="user_email"
-                                        placeholder="Correo electrónico">
+                                        placeholder="Correo electrónico" required>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="text" class="form-control form-control-user" name="user_pass"
-                                            id="user_pass" placeholder="Contraseña">
+                                            id="user_pass" placeholder="Contraseña" required>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" name="user_pass_confirmar"
-                                            id="user_pass_confirmar" placeholder="Confirmar Contraseña">
+                                            id="user_pass_confirmar" placeholder="Confirmar Contraseña" required>
                                     </div>
                                 </div>
                                 <input type="submit" value="Resgistra tu cuenta" class="btn btn-primary btn-user btn-block" name="registrar">
