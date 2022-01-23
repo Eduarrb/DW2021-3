@@ -65,13 +65,85 @@ DELIMITADOR;
         return $msj;
     }
 
+    function display_danger_msj($msj){
+        $msj = <<<DELIMITADOR
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Holy guacamole!</strong> $msj.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+DELIMITADOR;
+        return $msj;
+    }
+
     function fecha_formato($fecha_db){
         global $meses;
         $fecha_array = explode("-", $fecha_db);
         return "{$meses[$fecha_array[1] - 1]} {$fecha_array[2]}, {$fecha_array[0]}";
     }
 
+    function contar_filas($query){
+        return mysqli_num_rows($query);
+    }
+
+    function email_existe($email){
+        $query = query("SELECT * FROM usuarios WHERE user_email = '{$email}'");
+        confirmar($query);
+        if(contar_filas($query) >= 1){
+            return true;
+        }
+        return false;
+    }
+
     // ⚡⚡ FUNCIONES FRONT
+    function validar_user_reg(){
+        $min = 4;
+        $max = 10;
+
+        $errores = [];
+
+        if(isset($_POST['registrar'])){
+            $user_nombres = limpiar_string(trim($_POST['user_nombres']));
+            $user_apellidos = limpiar_string(trim($_POST['user_apellidos']));
+            $user_email = limpiar_string(trim($_POST['user_email']));
+            $user_pass = limpiar_string(trim($_POST['user_pass']));
+            $user_pass_confirmar = limpiar_string(trim($_POST['user_pass_confirmar']));
+
+            if(strlen($user_nombres) < $min){
+                $errores[] = "Tus nombres no deben tener menos de {$min} caracteres";
+            }
+            if(strlen($user_nombres) > $max){
+                $errores[] = "Tus nombres no deben tener más de {$max} caracteres";
+            }
+            if(strlen($user_apellidos) < $min){
+                $errores[] = "Tus apellidos no deben tener menos de {$min} caracteres";
+            }
+            if(strlen($user_apellidos) > $max){
+                $errores[] = "Tus apellidos no deben tener más de {$max} caracteres";
+            }
+            if(email_existe($user_email)){
+                $errores[] = "Lo sentimos, el correo {$user_email} ya existe 😢";
+            }
+            if($user_pass != $user_pass_confirmar){
+                $errores[] = "Las contraseñas ingresadas deben ser iguales";
+            }
+
+            // echo count($errores);
+            // print_r($errores);
+            if(!empty($errores)){
+                foreach($errores as $error){
+                    echo display_danger_msj($error);
+                }
+            } else {
+                // registrar al usuario
+            }
+            
+
+        }
+
+    }
+
     function show_categorias(){
         $query = query("SELECT * FROM categorias");
         confirmar($query);

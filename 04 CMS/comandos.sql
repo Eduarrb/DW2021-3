@@ -77,3 +77,5 @@ CREATE TABLE usuarios (
     user_status TINYINT DEFAULT 0,
     user_rol VARCHAR(100) NOT NULL
 )
+
+INSERT INTO usuarios (user_nombres, user_apellidos, user_email, user_pass, user_rol) VALUES ('Eduardo', 'Arroyo', 'eduardo@gmail.com', '123', 'admin')
