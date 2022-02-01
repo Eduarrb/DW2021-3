@@ -6,9 +6,14 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
                 <?php show_categorias(); ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin">ADMIN</a>
-                </li>
+                <?php
+                    if(isset($_SESSION['user_rol']) && $_SESSION['user_rol'] === 'admin'){
+                        ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="admin">ADMIN</a>
+                            </li>
+                    <?php }
+                ?>
             </ul>
         </div>
     </div>

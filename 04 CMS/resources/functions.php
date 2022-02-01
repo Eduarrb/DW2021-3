@@ -100,15 +100,15 @@ DELIMITADOR;
     use PHPMailer\PHPMailer\Exception;
 
     //Load Composer's autoloader
-    require 'vendor/autoload.php';
+    // require 'vendor/autoload.php';
 
     function send_email($email, $asunto, $mensaje, $headers = null){
         $mail = new PHPMailer();
         $mail->isSMTP();
         $mail->Host = 'smtp.mailtrap.io';
         $mail->SMTPAuth = true;
-        $mail->Username = '<usuario mailtrap>';
-        $mail->Password = '<password mailtrap>';
+        $mail->Username = 'c81a2a50dfe3c4';
+        $mail->Password = '718d0a2fba003a';
         $mail->Port = 465;
         $mail->SMTPSecure = 'tls';
         $mail->isHTML(true);
@@ -180,12 +180,83 @@ DELIMITADOR;
         $user_email = limpiar_string(trim($correo));
         $user_pass = limpiar_string(trim($pass));
 
+        $user_token = md5($user_email);
         $user_pass = password_hash($user_pass, PASSWORD_BCRYPT, array('cost' => 12));
-        $query = query("INSERT INTO usuarios (user_nombres, user_apellidos, user_email, user_pass, user_rol) VALUES ('{$user_nombres}', '{$user_apellidos}', '{$user_email}', '{$user_pass}', 'suscriptor')");
+        $query = query("INSERT INTO usuarios (user_nombres, user_apellidos, user_email, user_pass, user_token, user_rol) VALUES ('{$user_nombres}', '{$user_apellidos}', '{$user_email}', '{$user_pass}', '{$user_token}', 'suscriptor')");
         confirmar($query);
+        $mensaje = "Por favor pulsa o has click en el enlace para activar tu cuenta. \n<a href='http://localhost/dw2021-3/04%20CMS/public/activate.php?email={$user_email}&token={$user_token}' target='_blank'>Activar cuenta</a>";
+        $headers = "De: noreply@tudominio.com";
+        send_email($user_email, 'Activación de cuenta', $mensaje, $headers);
         return true;
         // return false;
         // mas codigo de registro
+    }
+
+    function activar_usuario(){
+        if(isset($_GET['email']) && isset($_GET['token'])){
+            $user_email = limpiar_string(trim($_GET['email']));
+            $user_token = limpiar_string(trim($_GET['token']));
+
+            // echo $user_email . " " . $user_token;
+            $query = query("SELECT user_id FROM usuarios WHERE user_email = '{$user_email}' AND user_token = '{$user_token}'");
+            confirmar($query);
+            $fila = fetch_array($query);
+            $user_id = $fila['user_id'];
+            if(contar_filas($query) == 1){
+                $query = query("UPDATE usuarios SET user_status = 1, user_token = '' WHERE user_id = {$user_id}");
+                confirmar($query);
+                set_mensaje(display_success_msj("Su cuenta ha sido verificada y activada, por favor inicie sesión"));
+                redirect("login.php");
+            } else {
+                set_mensaje(display_danger_msj("Los datos ingresados son erroneos. Vuelva a intentarlo"));
+                redirect("register.php");
+            }
+        }
+    }
+
+    function validar_user_login(){
+        if(isset($_POST['login'])){
+            $user_email = limpiar_string(trim($_POST['user_email']));
+            $user_pass = limpiar_string(trim($_POST['user_pass']));
+            $user_recordarme = isset($_POST['user_recordarme']);
+
+            if(login_user($user_email, $user_pass, $user_recordarme)){
+                redirect('./');
+            } else {
+                set_mensaje(display_danger_msj("¡Tu correo o password son incorrectos 😢😢!"));
+                redirect("login.php");
+            }
+        }
+    }
+
+    function login_user($email, $pass, $recordarme){
+        $query = query("SELECT * from usuarios WHERE user_email = '{$email}' AND user_status = 1");
+        confirmar($query);
+        if(contar_filas($query) == 1){
+            $fila = fetch_array($query);
+            $user_id = $fila['user_id'];
+            $user_pass = $fila['user_pass'];
+            $user_rol = $fila['user_rol'];
+            $user_nombres = $fila['user_nombres'];
+            $user_apellidos = $fila['user_apellidos'];
+
+            if(password_verify($pass, $user_pass)){
+                if($recordarme == 'on'){
+                    setcookie('email', $email, time() + 86400);
+                } else {
+                    setcookie('email', $email, time() + 600);
+                }
+                $_SESSION['user_id'] = $user_id;
+                $_SESSION['user_nombres'] = $user_nombres;
+                $_SESSION['user_apellidos'] = $user_apellidos;
+                $_SESSION['user_rol'] = $user_rol;
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     function show_categorias(){
@@ -193,7 +264,9 @@ DELIMITADOR;
         confirmar($query);
         while($fila = fetch_array($query)){
             $categorias = <<<DELIMITADOR
-                <li class="nav-item"><a class="nav-link" href="#">{$fila['cat_nombre']}</a></li> 
+                <li class="nav-item">
+                    <a class="nav-link" href="categorias.php?cat={$fila['cat_id']}">{$fila['cat_nombre']}</a>
+                </li> 
 DELIMITADOR;
             echo $categorias;
         }
@@ -241,6 +314,65 @@ DELIMITADOR;
             echo $noticias;
         }
     }
+
+    function noticias_mostrar_porCategoria(){
+        if(isset($_GET['cat'])){
+            $cat_id = limpiar_string(trim($_GET['cat']));
+            $query = query("SELECT noti_id, noti_img, noti_fecha, noti_titulo, noti_resumen FROM noticias WHERE noti_cat_id = {$cat_id} AND noti_status = 'publicado' ORDER BY noti_id DESC");
+            confirmar($query);
+            if(contar_filas($query) == 0){
+                echo "<div class='col-md 12 text-center pt-4 pb-4'>Ninguna publicacion encontrada referente a la categoria 😢😢</div>";
+            } else {
+                while($fila = fetch_array($query)){
+                    $fecha_res = fecha_formato($fila['noti_fecha']);
+                    $noticias = <<<DELIMITADOR
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <a href="post.php?id={$fila['noti_id']}"><img class="card-img-top" src="img/{$fila['noti_img']}" alt="{$fila['noti_titulo']}" /></a>
+                                <div class="card-body">
+                                    <div class="small text-muted">{$fecha_res}</div>
+                                    <h2 class="card-title h4">{$fila['noti_titulo']}</h2>
+                                    <p class="card-text">{$fila['noti_resumen']}</p>
+                                    <a class="btn btn-primary" href="post.php?id={$fila['noti_id']}">Leer más →</a>
+                                </div>
+                            </div>
+                        </div>
+        DELIMITADOR;
+                    echo $noticias;
+                }
+            }
+        }
+    }
+
+    function noticias_buscar(){
+        if(isset($_GET['noti_titulo'])){
+            $noti_titulo = limpiar_string(trim($_GET['noti_titulo']));
+            $query = query("SELECT noti_id, noti_img, noti_fecha, noti_titulo, noti_resumen FROM noticias WHERE noti_titulo LIKE '%{$noti_titulo}%' AND noti_status = 'publicado' ORDER BY noti_id DESC");
+            confirmar($query);
+            if(contar_filas($query) == 0){
+                echo "<div class='col-md 12 text-center pt-4 pb-4'>Ninguna publicacion encontrada referente al título 😢😢</div>";
+            } else {
+                while($fila = fetch_array($query)){
+                    $fecha_res = fecha_formato($fila['noti_fecha']);
+                    $noticias = <<<DELIMITADOR
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <a href="post.php?id={$fila['noti_id']}"><img class="card-img-top" src="img/{$fila['noti_img']}" alt="{$fila['noti_titulo']}" /></a>
+                                <div class="card-body">
+                                    <div class="small text-muted">{$fecha_res}</div>
+                                    <h2 class="card-title h4">{$fila['noti_titulo']}</h2>
+                                    <p class="card-text">{$fila['noti_resumen']}</p>
+                                    <a class="btn btn-primary" href="post.php?id={$fila['noti_id']}">Leer más →</a>
+                                </div>
+                            </div>
+                        </div>
+        DELIMITADOR;
+                    echo $noticias;
+                }
+            }
+        }
+    }
+
 
     function noticia_individual_mostrar(){
         if(isset($_GET['id'])){
