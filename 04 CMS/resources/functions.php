@@ -1,4 +1,9 @@
 <?php
+    $_SESSION['db_pass'] = '';
+    $_SESSION['db_host'] = 'localhost';
+    $_SESSION['db_user'] = 'root';
+    $_SESSION['db_name'] = 'cms_2021_3';
+
     $meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Dic'];
 
     // ⚡⚡ FUNCIONES BASICAS
