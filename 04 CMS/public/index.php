@@ -30,7 +30,7 @@
                     <!-- Nested row for non-featured blog posts-->
                     <div class="row noticias">
                         <!-- Blog post-->
-                        <?php noticias_mostrar_resto($ultimo_id); ?>
+                        <?php //noticias_mostrar_resto($ultimo_id); ?>
 
                     </div>
                     <!-- Pagination-->
