@@ -2,7 +2,9 @@ import { obtenerJson } from "./helpers.js";
 
 export const estado = {
     noticias: {
-        resultados: []
+        resultados: [],
+        pagina: 1,
+        resultadosPorPagina: 2
     }
 }
 
@@ -21,4 +23,13 @@ export const cargarResultadosNoticias = async function(url){
     } catch (error) {
         throw error;
     }
+}
+
+export const obtenerResultadosPaginacion = function(pagina = estado.noticias.pagina){
+    estado.noticias.pagina = pagina;
+    // console.log(estado.noticias.pagina);
+    const inicio = (pagina - 1) * estado.noticias.resultadosPorPagina;
+    const final = pagina * estado.noticias.resultadosPorPagina;
+    // console.log(inicio, final);
+    return estado.noticias.resultados.slice(inicio, final);
 }
