@@ -2,6 +2,7 @@ import Vista from "./Vista.js";
 
 class NoticiasVista extends Vista{
     _elementoPadre = document.querySelector('.noticias');
+    _mensajeError = 'No se encontro ninguna noticia';
     _generarPlantilla(){
         return this._data.map(this._generarPlantillaPrevia).join('');
     }

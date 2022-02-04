@@ -18,6 +18,9 @@ class PaginacionVista extends Vista{
         // console.log(paginaActual);
         const numPaginas = Math.ceil(this._data.resultados.length / this._data.resultadosPorPagina);
         // console.log(numPaginas);
+        if(paginaActual === 1 && numPaginas === 1 || numPaginas === 0){
+            return '';
+        }
         if(paginaActual === 1 && numPaginas > 1){
             return `
                 <li class="page-item ms-2">

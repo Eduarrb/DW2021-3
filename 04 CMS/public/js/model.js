@@ -5,18 +5,26 @@ export const estado = {
         resultados: [],
         pagina: 1,
         resultadosPorPagina: 2
+    },
+    fechaOptions:  { 
+        weekday: 'short', 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
     }
+
 }
 
 export const cargarResultadosNoticias = async function(url){
     try {
         const data = await obtenerJson(`${url}`);
         estado.noticias.resultados = data.resultado.map(el => {
+            const fecha = new Date(el.noti_fecha);
             return {
                 id: el.noti_id,
                 titulo: el.noti_titulo,
                 resumen: el.noti_resumen,
-                fecha: el.noti_fecha,
+                fecha: fecha.toLocaleDateString("es-ES", estado.fechaOptions),
                 img: el.noti_img
             }
         });
