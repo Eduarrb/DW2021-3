@@ -47,21 +47,29 @@
                         <div class="card bg-light">
                             <div class="card-body">
                                 <!-- Comment form-->
-                                <form class="mb-4" method="post">
-                                    <div class="form-group mb-3">
-                                        <input type="text" name="com_nombre" class="form-control" placeholder="Tu nombre">
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <input type="email" name="com_email" class="form-control" placeholder="Tu correo">
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <textarea class="form-control" rows="3" placeholder="Tu mensaje" name="com_mensaje"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="submit" value="Enviar" class="btn btn-primary" name="enviar">
-                                    </div>
-                                </form>
-                                <?php comentario_crear($fila['noti_id']); ?>
+                                <?php
+                                    if(isset($_SESSION['user_rol'])){
+                                        ?>
+                                            <form class="mb-4" method="post">
+                                                <div class="form-group mb-3">
+                                                    <textarea class="form-control" rows="3" placeholder="Tu mensaje" name="com_mensaje"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="submit" value="Enviar" class="btn btn-primary" name="enviar">
+                                                </div>
+                                            </form>
+                                    <?php } else {
+                                        ?>
+                                            <div class="alert alert-warning" role="alert">
+                                                Debes estar registrado o iniciar sesión para comentar 💥💥
+                                            </div>
+                                    <?php }
+                                ?>
+                                <?php 
+                                    if(isset($_SESSION['user_id'])){
+                                        comentario_crear($fila['noti_id'], $_SESSION['user_id']); 
+                                    }
+                                ?>
                                 <!-- Single comment-->
                                 <?php comentarios_mostrar($fila['noti_id']); ?>
                             </div>

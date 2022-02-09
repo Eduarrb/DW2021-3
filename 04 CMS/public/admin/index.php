@@ -35,6 +35,12 @@
                         if(isset($_GET['comentarios'])){
                             include(TEMPLATE_BACK . DS . "comentarios.php");
                         }
+                        if(isset($_GET['suscriptores'])){
+                            include(TEMPLATE_BACK . DS . "user_suscriptores.php");
+                        }
+                        if(isset($_GET['administradores'])){
+                            include(TEMPLATE_BACK . DS . "user_administradores.php");
+                        }
                     
                     ?>
 

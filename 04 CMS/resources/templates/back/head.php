@@ -2,7 +2,7 @@
     if(!isset($_SESSION['user_id']) && !isset($_SESSION['user_nombres']) && !isset($_SESSION['user_apellidos']) && !isset($_SESSION['user_rol'])){
         redirect('../');
     }
-    if($_SESSION['user_rol'] != 'admin'){
+    if($_SESSION['user_rol'] != 'admin' && $_SESSION['user_rol'] != 'god'){
         redirect('../');
     }
 

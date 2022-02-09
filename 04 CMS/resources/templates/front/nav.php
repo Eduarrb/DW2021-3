@@ -7,7 +7,7 @@
 
                 <?php show_categorias(); ?>
                 <?php
-                    if(isset($_SESSION['user_rol']) && $_SESSION['user_rol'] === 'admin'){
+                    if(isset($_SESSION['user_rol']) && $_SESSION['user_rol'] === 'admin' || $_SESSION['user_rol'] === 'god'){
                         ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="admin">ADMIN</a>

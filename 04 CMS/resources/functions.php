@@ -298,6 +298,8 @@ DELIMITADOR;
         echo $noticia_ultima;
     }
 
+
+    // ⚡⚡ ya no son funcionales
     function noticias_mostrar_resto($id_excluyente){
         $query = query("SELECT noti_id, noti_img, noti_fecha, noti_titulo, noti_resumen FROM noticias WHERE noti_id != {$id_excluyente} AND noti_status = 'publicado' ORDER BY noti_id DESC");
         confirmar($query);
@@ -320,6 +322,7 @@ DELIMITADOR;
         }
     }
 
+    // ⚡⚡ ya no son funcionales
     function noticias_mostrar_porCategoria(){
         if(isset($_GET['cat'])){
             $cat_id = limpiar_string(trim($_GET['cat']));
@@ -392,13 +395,11 @@ DELIMITADOR;
         }
     }
 
-    function comentario_crear($noti_id){
+    function comentario_crear($noti_id, $user_id){
         if(isset($_POST['enviar'])){
-            $com_nombre = limpiar_string(trim($_POST['com_nombre']));
-            $com_email = limpiar_string(trim($_POST['com_email']));
             $com_mensaje = limpiar_string(trim($_POST['com_mensaje']));
 
-            $query = query("INSERT INTO comentarios(com_noti_id, com_nombre, com_email, com_mensaje, com_status, com_fecha) VALUES ({$noti_id}, '{$com_nombre}', '{$com_email}', '{$com_mensaje}', 'pendiente', NOW())");
+            $query = query("INSERT INTO comentarios(com_noti_id, com_user_id, com_mensaje, com_status, com_fecha) VALUES ({$noti_id}, {$user_id}, '{$com_mensaje}', 'pendiente', NOW())");
             confirmar($query);
             set_mensaje(display_success_msjV5('Tu comentario a sido enviado satisfactoriamente. Espere la aprobación del admin'));
             redirect("post.php?id={$noti_id}");
@@ -406,14 +407,18 @@ DELIMITADOR;
     }
 
     function comentarios_mostrar($noti_id){
-        $query = query("SELECT * FROM comentarios WHERE com_noti_id = {$noti_id} AND com_status = 'aprobado'");
+        $query = query("SELECT CONCAT(b.user_nombres, ' ', b.user_apellidos) AS usuario, a.com_mensaje, b.user_img FROM comentarios a INNER JOIN usuarios b ON a.com_user_id = b.user_id WHERE com_noti_id = {$noti_id} AND com_status = 'aprobado'");
         confirmar($query);
         while($fila = fetch_array($query)){
+            $user_img = $fila['user_img'];
+            if(empty($user_img)){
+                $user_img = 'https://dummyimage.com/50x50/ced4da/6c757d.jpg';
+            }
             $comentarios = <<<DELIMITADOR
                 <div class="d-flex mb-4">
-                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                    <div class="flex-shrink-0"><img class="rounded-circle" src="{$user_img}" alt="..." / width="50"></div>
                     <div class="ms-3">
-                        <div class="fw-bold">{$fila['com_nombre']}</div>
+                        <div class="fw-bold">{$fila['usuario']}</div>
                         {$fila['com_mensaje']}
                     </div>
                 </div>
@@ -604,17 +609,15 @@ DELIMITADOR;
     }
 
     function comentarios_mostrar_admin(){
-        $query = query("SELECT a.com_id, b.noti_id, b.noti_titulo, a.com_nombre, a.com_email, a.com_mensaje, a.com_fecha, a.com_status FROM comentarios a INNER JOIN noticias b ON a.com_noti_id = b.noti_id WHERE a.com_status = 'pendiente' ORDER BY a.com_id DESC");
+        $query = query("SELECT a.com_id, b.noti_id, b.noti_titulo, CONCAT(c.user_nombres, ' ', c.user_apellidos) AS usuario, a.com_mensaje, a.com_fecha, a.com_status FROM comentarios a INNER JOIN noticias b ON a.com_noti_id = b.noti_id INNER JOIN usuarios c ON a.com_user_id = c.user_id WHERE a.com_status = 'pendiente' ORDER BY a.com_id DESC");
         confirmar($query);
         while($fila = fetch_array($query)){
             $comentarios = <<<DELIMITADOR
                 <tr>
-                    <td>{$fila['com_id']}</td>
                     <td>
-                        <a href="../post.php?id={$fila['noti_id']}">{$fila['noti_titulo']}</a>
+                        <a href="../post.php?id={$fila['noti_id']}" target="_blank">{$fila['noti_titulo']}</a>
                     </td>
-                    <td>{$fila['com_nombre']}</td>
-                    <td>{$fila['com_email']}</td>
+                    <td>{$fila['usuario']}</td>
                     <td>{$fila['com_mensaje']}</td>
                     <td>{$fila['com_fecha']}</td>
                     <td>{$fila['com_status']}</td>
@@ -637,6 +640,27 @@ DELIMITADOR;
             confirmar($query);
             set_mensaje(display_success_msj('Comentario aprobado correctamente 😁😁'));
             redirect('index.php?comentarios');
+        }
+    }
+
+    function show_users_rol($rol, $estado){
+        $query = query("SELECT * FROM usuarios WHERE user_rol = '{$rol}' AND user_status = {$estado}");
+        confirmar($query);
+        while($fila = fetch_array($query)){
+            $usuarios = <<<DELIMITADOR
+                <tr>
+                    <td>{$fila['user_nombres']}</td>
+                    <td>{$fila['user_apellidos']}</td>
+                    <td>{$fila['user_email']}</td>
+                    <td>
+                        <a href="index.php?suscriptores&admin={$fila['user_id']}" class="btn btn-small btn-success">Cambiar</a>
+                    </td>
+                    <td>
+                        <a href="index.php?suscriptores&deni={$fila['user_id']}" class="btn btn-small btn-danger">Desactivar</a>
+                    </td>
+                </tr>
+DELIMITADOR;
+            echo $usuarios;
         }
     }
 ?>

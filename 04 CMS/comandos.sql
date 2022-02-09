@@ -55,15 +55,14 @@ CREATE TABLE comentarios(
 )
 
 SELECT 
-    a.com_id,
     b.noti_titulo,
-    a.com_nombre,
-    a.com_email,
+    CONCAT(c.user_nombres, ' ', c.user_apellidos) AS usuario,
     a.com_mensaje,
     a.com_fecha,
     a.com_status
     FROM comentarios a
         INNER JOIN noticias b ON a.com_noti_id = b.noti_id
+        INNER JOIN usuarios c ON a.com_user_id = c.user_id
         WHERE a.com_status = 'pendiente' ORDER BY a.com_id DESC
 
 CREATE TABLE usuarios (
