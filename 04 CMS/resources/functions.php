@@ -282,20 +282,22 @@ DELIMITADOR;
         $query = query("SELECT noti_id, noti_img, noti_fecha, noti_titulo, noti_resumen FROM noticias WHERE noti_status = 'publicado' ORDER BY noti_id DESC LIMIT 1");
         confirmar($query);
         $fila = fetch_array($query);
-        $ultimo_id = $fila['noti_id'];
-        $fecha_res = fecha_formato($fila['noti_fecha']);
-        $noticia_ultima = <<<DELIMITADOR
-            <div class="card mb-4">
-                <a href="post.php?id={$fila['noti_id']}"><img class="card-img-top" src="img/{$fila['noti_img']}" alt="{$fila['noti_titulo']}" /></a>
-                <div class="card-body">
-                    <div class="small text-muted">{$fecha_res}</div>
-                    <h2 class="card-title">{$fila['noti_titulo']}</h2>
-                    <p class="card-text">{$fila['noti_resumen']}</p>
-                    <a class="btn btn-primary" href="post.php?id={$fila['noti_id']}">Leer más →</a>
+        if(!empty($fila)){
+            $ultimo_id = $fila['noti_id'];
+            $fecha_res = fecha_formato($fila['noti_fecha']);
+            $noticia_ultima = <<<DELIMITADOR
+                <div class="card mb-4">
+                    <a href="post.php?id={$fila['noti_id']}"><img class="card-img-top" src="img/{$fila['noti_img']}" alt="{$fila['noti_titulo']}" /></a>
+                    <div class="card-body">
+                        <div class="small text-muted">{$fecha_res}</div>
+                        <h2 class="card-title">{$fila['noti_titulo']}</h2>
+                        <p class="card-text">{$fila['noti_resumen']}</p>
+                        <a class="btn btn-primary" href="post.php?id={$fila['noti_id']}">Leer más →</a>
+                    </div>
                 </div>
-            </div>
-DELIMITADOR;
-        echo $noticia_ultima;
+    DELIMITADOR;
+            echo $noticia_ultima;
+        }
     }
 
 
@@ -387,7 +389,7 @@ DELIMITADOR;
             $id = limpiar_string(trim($_GET['id']));
             $query = query("UPDATE noticias SET noti_vistas = noti_vistas + 1 WHERE noti_id = {$id}");
             confirmar($query);
-            $query = query("SELECT * FROM noticias WHERE noti_id = {$id}");
+            $query = query("SELECT * FROM noticias a INNER JOIN usuarios b ON a.noti_user_id = b.user_id WHERE noti_id = {$id}");
             confirmar($query);
             return $fila = fetch_array($query);
         } else {
@@ -471,9 +473,17 @@ DELIMITADOR;
     }
     
     // ⚡⚡ funcion global para eliminar data
-    function elemento_delete($tabla, $campo){
+    function elemento_delete($tabla, $campo, $imgCampo = null){
         if(isset($_GET['delete'])){
             $id = limpiar_string(trim($_GET['delete']));
+            if($imgCampo != null){
+                $query = query("SELECT * FROM {$tabla} WHERE {$campo} = {$id}");
+                confirmar($query);
+                $fila = fetch_array($query);
+                $img = $fila[$imgCampo];
+                $imgLocation = "../img/{$img}";
+                unlink($imgLocation);
+            }
             $query = query("DELETE FROM {$tabla} WHERE {$campo} = {$id}");
             confirmar($query);
             set_mensaje(display_success_msj("Elemento eliminado correctamente 👍"));
@@ -482,15 +492,20 @@ DELIMITADOR;
     }
 
     function noticias_mostrar_admin(){
-        $query = query("SELECT * FROM noticias a INNER JOIN categorias b ON a.noti_cat_id = b.cat_id ORDER BY a.noti_id DESC");
-        confirmar($query);
+        if($_SESSION['user_rol'] == 'god'){
+            $query = query("SELECT * FROM noticias a INNER JOIN categorias b ON a.noti_cat_id = b.cat_id INNER JOIN usuarios c ON a.noti_user_id = c.user_id  ORDER BY a.noti_id DESC");
+            confirmar($query);
+        } else {
+            $query = query("SELECT * FROM noticias a INNER JOIN categorias b ON a.noti_cat_id = b.cat_id INNER JOIN usuarios c ON a.noti_user_id = c.user_id WHERE c.user_id = {$_SESSION['user_id']} ORDER BY a.noti_id DESC");
+            confirmar($query);
+        }
         while($fila = fetch_array($query)){
             $noticias = <<<DELIMITADOR
                 <tr>
                     <td>{$fila['noti_id']}</td>
                     <td><a href="../categorias.php?id={$fila['noti_cat_id']}" target="_blank">{$fila['cat_nombre']}</a></td>
                     <td><a href="../post.php?id={$fila['noti_id']}" target="_blank">{$fila['noti_titulo']}</a></td>
-                    <td>{$fila['noti_autor']}</td>
+                    <td>{$fila['user_nombres']} {$fila['user_apellidos']}</td>
                     <td>{$fila['noti_resumen']}</td>
                     <td>{$fila['noti_contenido']}</td>
                     <td><img src="../img/{$fila['noti_img']}" alt="" width="150"></td>
@@ -519,7 +534,6 @@ DELIMITADOR;
     function noticia_agregar(){
         if(isset($_POST['guardar'])){
             $noti_titulo = limpiar_string(trim($_POST['noti_titulo']));
-            $noti_autor = limpiar_string(trim($_POST['noti_autor']));
             $noti_cat_id = limpiar_string(trim($_POST['noti_cat_id']));
             $noti_resumen = limpiar_string(trim($_POST['noti_resumen']));
             $noti_contenido = limpiar_string(trim($_POST['noti_contenido']));
@@ -533,7 +547,7 @@ DELIMITADOR;
 
             move_uploaded_file($noti_img_tmp, "../img/{$noti_img}");
 
-            $query = query("INSERT INTO noticias(noti_cat_id, noti_titulo, noti_resumen, noti_contenido, noti_fecha, noti_img, noti_autor, noti_status) VALUES ({$noti_cat_id}, '{$noti_titulo}', '{$noti_resumen}', '{$noti_contenido}', NOW(), '{$noti_img}', '{$noti_autor}', '{$noti_status}')");
+            $query = query("INSERT INTO noticias(noti_cat_id, noti_user_id, noti_titulo, noti_resumen, noti_contenido, noti_fecha, noti_img, noti_status) VALUES ({$noti_cat_id}, {$_SESSION['user_id']},'{$noti_titulo}', '{$noti_resumen}', '{$noti_contenido}', NOW(), '{$noti_img}', '{$noti_status}')");
             confirmar($query);
             set_mensaje(display_success_msj('La notica fue guardada exitosamente'));
             redirect('index.php?noticias');
@@ -643,7 +657,7 @@ DELIMITADOR;
         }
     }
 
-    function show_users_rol($rol, $estado){
+    function show_users_rol($rol, $estado, $url){
         $query = query("SELECT * FROM usuarios WHERE user_rol = '{$rol}' AND user_status = {$estado}");
         confirmar($query);
         while($fila = fetch_array($query)){
@@ -653,14 +667,67 @@ DELIMITADOR;
                     <td>{$fila['user_apellidos']}</td>
                     <td>{$fila['user_email']}</td>
                     <td>
-                        <a href="index.php?suscriptores&admin={$fila['user_id']}" class="btn btn-small btn-success">Cambiar</a>
+                        <a href="index.php?{$url}&admin={$fila['user_id']}" class="btn btn-small btn-success">Cambiar</a>
                     </td>
                     <td>
-                        <a href="index.php?suscriptores&deni={$fila['user_id']}" class="btn btn-small btn-danger">Desactivar</a>
+                        <a href="index.php?{$url}&deni={$fila['user_id']}" class="btn btn-small btn-danger">Desactivar</a>
                     </td>
                 </tr>
 DELIMITADOR;
             echo $usuarios;
         }
     }
+    function show_users_desactivados(){
+        $query = query("SELECT * FROM usuarios WHERE user_status = 0");
+        confirmar($query);
+        while($fila = fetch_array($query)){
+            $usuarios = <<<DELIMITADOR
+                <tr>
+                    <td>{$fila['user_nombres']}</td>
+                    <td>{$fila['user_apellidos']}</td>
+                    <td>{$fila['user_email']}</td>
+                    <td>{$fila['user_rol']}</td>
+                    <td>
+                        <a href="index.php?desactivados&enable={$fila['user_id']}" class="btn btn-small btn-success">Activar</a>
+                    </td>
+                </tr>
+DELIMITADOR;
+            echo $usuarios;
+        }
+    }
+    function usuarios_cambiar_rol($rol){
+        if(isset($_GET['admin']) && isset($_GET['suscriptores'])){
+            $id = limpiar_string(trim($_GET['admin']));
+            $query = query("UPDATE usuarios SET user_rol = 'admin' WHERE user_id = {$id}");
+            confirmar($query);
+            set_mensaje(display_success_msj('El cambio de rol se hizo correctamente'));
+            redirect('index.php?administradores');
+        }
+        if(isset($_GET['admin']) && isset($_GET['administradores'])){
+            $id = limpiar_string(trim($_GET['admin']));
+            $query = query("UPDATE usuarios SET user_rol = 'suscriptor' WHERE user_id = {$id}");
+            confirmar($query);
+            set_mensaje(display_success_msj('El cambio de rol se hizo correctamente'));
+            redirect('index.php?suscriptores');
+        }
+    }
+    function usuarios_desactivar(){
+        if(isset($_GET['deni'])){
+            $id = limpiar_string(trim($_GET['deni']));
+            $query = query("UPDATE usuarios SET user_status = 0 WHERE user_id = {$id}");
+            confirmar($query);
+            set_mensaje(display_success_msj('Usuario desactivado con exito'));
+            redirect('index.php?desactivados');
+        }
+    }
+    function usuarios_activar(){
+        if(isset($_GET['enable'])){
+            $id = limpiar_string(trim($_GET['enable']));
+            $query = query("UPDATE usuarios SET user_status = 1 WHERE user_id = {$id}");
+            confirmar($query);
+            set_mensaje(display_success_msj('Usuario reactivado con exito'));
+            redirect('index.php?desactivados');
+        }
+    }
+
 ?>

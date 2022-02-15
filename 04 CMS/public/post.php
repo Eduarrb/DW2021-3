@@ -20,7 +20,7 @@
                                 <?php echo $fila['noti_titulo']; ?>
                             </h1>
                             <!-- Post meta content-->
-                            <div class="text-muted fst-italic mb-2">Publicado en <?php echo fecha_formato($fila['noti_fecha']); ?> por <?php echo $fila['noti_autor']; ?></div>
+                            <div class="text-muted fst-italic mb-2">Publicado en <?php echo fecha_formato($fila['noti_fecha']); ?> por <?php echo $fila['user_nombres'] . " " . $fila['user_apellidos']; ?></div>
                             <!-- Post categories-->
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>

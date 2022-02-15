@@ -41,6 +41,9 @@
                         if(isset($_GET['administradores'])){
                             include(TEMPLATE_BACK . DS . "user_administradores.php");
                         }
+                        if(isset($_GET['desactivados'])){
+                            include(TEMPLATE_BACK . DS . "user_desactivados.php");
+                        }
                     
                     ?>
 

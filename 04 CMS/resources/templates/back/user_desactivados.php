@@ -1,5 +1,5 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Usuarios - Administradores</h1>
+    <h1 class="h3 mb-0 text-gray-800">Usuarios - Desactivados</h1>
 </div>
 <div class="row">
     <div class="col-md-6">
@@ -14,17 +14,16 @@
                     <th>Nombres</th>
                     <th>Apellidos</th>
                     <th>Correo</th>
-                    <th>Convertir a Suscriptor</th>
-                    <th>Desactivar</th>
+                    <th>Rol</th>
+                    <th>Activar</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                    show_users_rol('admin', 1, 'administradores');
+                    show_users_desactivados();
+                    usuarios_activar();
                 ?>
             </tbody>
         </table>
     </div>
 </div>
-<?php usuarios_cambiar_rol('admin'); ?>
-<?php usuarios_desactivar(); ?>

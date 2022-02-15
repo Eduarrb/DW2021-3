@@ -10,10 +10,6 @@
                 <input type="text" name="noti_titulo" id="noti_titulo" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="noti_autor">Autor</label>
-                <input type="text" name="noti_autor" id="noti_autor" class="form-control" required>
-            </div>
-            <div class="form-group">
                 <label for="noti_cat_id">Categoría</label>
                 <select name="noti_cat_id" id="noti_cat_id" class="form-control" required>
                     <option value="" disabled selected>Selecciona una categoria</option>

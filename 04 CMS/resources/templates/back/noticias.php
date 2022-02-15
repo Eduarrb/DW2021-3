@@ -32,6 +32,6 @@
                 <?php noticias_mostrar_admin(); ?>
             </tbody>
         </table>
-        <?php elemento_delete("noticias", "noti_id"); ?>
+        <?php elemento_delete("noticias", "noti_id", "noti_img"); ?>
     </div>
 </div>
