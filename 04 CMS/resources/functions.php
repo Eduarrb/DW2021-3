@@ -104,33 +104,82 @@ DELIMITADOR;
         }
         return false;
     }
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\SMTP;
-    use PHPMailer\PHPMailer\Exception;
+    function send_email($email, $asunto, $msj, $name = ''){
+        $email = $email;
+        $name = $name;
+        $body = "
+            <h3>{$asunto}</h3>
+            <br>
+            <p>{$msj}</p>
+            <br>
+        ";
+        $headers = array(
+            'Authorization: Bearer <private api key>',
+            'Content-Type: application/json'
+        );
+        $data = array(
+            "personalizations" => array(
+                array(
+                    "to" => array(
+                        array(
+                            "email" => $email,
+                            "name" => $name
+                        )
+                    )
+                )
+            ),
+            "from" => array(
+                "email" => "noreply@cms20213.xyz"
+            ),
+            "subject" => $asunto,
+            "content" => array(
+                array(
+                    "type" => "text/html",
+                    "value" => $body
+                )
+            )
+        );
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api.sendgrid.com/v3/mail/send");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        echo $response;
+    }
+
+
+
+    // use PHPMailer\PHPMailer\PHPMailer;
+    // use PHPMailer\PHPMailer\SMTP;
+    // use PHPMailer\PHPMailer\Exception;
 
     //Load Composer's autoloader
     // require 'vendor/autoload.php';
 
-    function send_email($email, $asunto, $mensaje, $headers = null){
-        $mail = new PHPMailer();
-        $mail->isSMTP();
-        $mail->Host = 'smtp.mailtrap.io';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'c81a2a50dfe3c4';
-        $mail->Password = '718d0a2fba003a';
-        $mail->Port = 465;
-        $mail->SMTPSecure = 'tls';
-        $mail->isHTML(true);
-        $mail->CharSet = "UTF-8";
+    // function send_email($email, $asunto, $mensaje, $headers = null){
+    //     $mail = new PHPMailer();
+    //     $mail->isSMTP();
+    //     $mail->Host = 'smtp.mailtrap.io';
+    //     $mail->SMTPAuth = true;
+    //     $mail->Username = 'c81a2a50dfe3c4';
+    //     $mail->Password = '718d0a2fba003a';
+    //     $mail->Port = 465;
+    //     $mail->SMTPSecure = 'tls';
+    //     $mail->isHTML(true);
+    //     $mail->CharSet = "UTF-8";
 
-        $mail->setFrom('from@example.com', 'Mailer');
-        $mail->addAddress($email);
-        $mail->Subject = $asunto;
-        $mail->Body = $mensaje;
-        if($mail->send()){
-            $emailSent = true;
-        }
-    }
+    //     $mail->setFrom('from@example.com', 'Mailer');
+    //     $mail->addAddress($email);
+    //     $mail->Subject = $asunto;
+    //     $mail->Body = $mensaje;
+    //     if($mail->send()){
+    //         $emailSent = true;
+    //     }
+    // }
 
     // ⚡⚡ FUNCIONES FRONT
     function password_reset(){
@@ -281,8 +330,8 @@ DELIMITADOR;
         $query = query("INSERT INTO usuarios (user_nombres, user_apellidos, user_email, user_pass, user_token, user_rol) VALUES ('{$user_nombres}', '{$user_apellidos}', '{$user_email}', '{$user_pass}', '{$user_token}', 'suscriptor')");
         confirmar($query);
         $mensaje = "Por favor pulsa o has click en el enlace para activar tu cuenta. \n<a href='http://localhost/dw2021-3/04%20CMS/public/activate.php?email={$user_email}&token={$user_token}' target='_blank'>Activar cuenta</a>";
-        $headers = "De: noreply@tudominio.com";
-        send_email($user_email, 'Activación de cuenta', $mensaje, $headers);
+        // $headers = "De: noreply@tudominio.com";
+        send_email($user_email, 'Activación de cuenta', $mensaje, "Prueba");
         return true;
         // return false;
         // mas codigo de registro
