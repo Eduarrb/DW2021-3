@@ -20,6 +20,11 @@
 
                     <?php
 
+                        // echo $_SERVER['REQUEST_URI'];
+                        if($_SERVER['REQUEST_URI'] == '/dw2021-3/04%20CMS/public/admin/' || $_SERVER['REQUEST_URI'] == '/dw2021-3/04%20CMS/public/admin/index.php'){
+                            include(TEMPLATE_BACK . DS . "dashboard.php");
+                        }
+
                         if(isset($_GET['categorias'])){
                             include(TEMPLATE_BACK . DS . "categorias.php");
                         }

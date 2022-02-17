@@ -16,23 +16,20 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-2">¿Olvidaste tu contraseña?</h1>
-                                        <p class="mb-4">Lo entendemos, pasan cosas. Sólo tienes que introducir tu dirección de correo electrónico a continuación. ¡Y enviaremos un enlace para restablecer tu contraseña!</p>
+                                        <h1 class="h4 text-gray-900 mb-2">Ingresa el código de verificación</h1>
                                     </div>
                                     <div>
                                         <?php
-                                            mostrar_msj();
-                                            recover_password();
+                                            validar_codigo();
                                         ?>
                                     </div>
                                     <form class="user" method="post">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
+                                            <input type="text" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Ingresa tu correo electrónico..." name="user_email">
+                                                placeholder="Ingresa tu código..." name="user_token" required>
                                         </div>
-                                        <input type="submit" value="Restablecer contraseña" class="btn btn-primary btn-user btn-block" name="recover">
-                                        <input type="hidden" class="hide" name="user_token" value="<?php echo token_generador(); ?>">
+                                        <input type="submit" value="Continuar" class="btn btn-primary btn-user btn-block" name="restablecer">
                                     </form>
                                     <hr>
                                     <div class="text-center">

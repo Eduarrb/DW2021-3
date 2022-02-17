@@ -48,6 +48,10 @@
         }
     }
 
+    function token_generador(){
+        return $token = $_SESSION['token'] = md5(uniqid(mt_rand(), true));
+    }
+
     function display_success_msjV5($msj){
         $msj = <<<DELIMITADOR
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -129,6 +133,93 @@ DELIMITADOR;
     }
 
     // ⚡⚡ FUNCIONES FRONT
+    function password_reset(){
+        if(isset($_POST['confirmar'])){
+            if(isset($_COOKIE['temp_access_code'])){
+                if(isset($_GET['email']) && isset($_GET['token'])){
+                    if(isset($_SESSION['token']) && isset($_POST['user_token']) && $_SESSION['token'] == $_POST['user_token']){
+                        if($_POST['user_pass'] == $_POST['user_pass_confirmar']){
+                            $user_pass = limpiar_string(trim($_POST['user_pass']));
+                            $user_email = limpiar_string(trim($_GET['email']));
+
+                            $user_pass = password_hash($user_pass, PASSWORD_BCRYPT, array('cost' => 12));
+                            $query = query("UPDATE usuarios SET user_pass = '{$user_pass}', user_token = '' WHERE user_email = '{$user_email}'");
+                            confirmar($query);
+                            set_mensaje(display_success_msj('La contraseña se cambio correctamente, por favor inicie sesión'));
+                            redirect('login.php');
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } else {
+                set_mensaje(display_danger_msj('Lo sentimos, el tiempo de validación ha caducado. Intentelo otra vez'));
+                redirect('forgot-password.php');
+            }
+        } else {
+
+        }
+    }
+    function validar_codigo(){
+        if(isset($_COOKIE['temp_access_code'])){
+            if(!isset($_GET['email']) || !isset($_GET['code'])){
+                set_mensaje(display_danger_msj('Lo sentimos, no se verificó correctamente los datos'));
+                redirect('forgot-password.php');
+            }
+            else if(empty($_GET['email']) || empty($_GET['code'])){
+                set_mensaje(display_danger_msj('Lo sentimos, no se verificó correctamente los datos'));
+                redirect('forgot-password.php');
+            }
+            else {
+                if(isset($_POST['restablecer'])){
+                    $user_email = limpiar_string(trim($_GET['email']));
+                    $user_token = limpiar_string(trim($_POST['user_token']));
+                    $query = query("SELECT user_id FROM usuarios WHERE user_email = '{$user_email}' AND user_token = '{$user_token}'");
+                    confirmar($query);
+                    if(contar_filas($query) == 1){
+                        setcookie('temp_access_code', $user_token, time() + 1180);
+                        redirect("reset.php?email={$user_email}&token={$user_token}");
+                    } else {
+                        set_mensaje(display_danger_msj('Lo sentimos, datos invalidos'));
+                        redirect('forgot-password.php');
+                    }
+                }
+            }
+        } else {
+            set_mensaje(display_danger_msj('Lo sentimos, el tiempo de validación ha caducado. Intentelo otra vez'));
+            redirect('forgot-password.php');
+        }
+    }
+    function recover_password(){
+        if(isset($_POST['recover'])){
+            if(isset($_SESSION['token']) && $_POST['user_token'] == $_SESSION['token']){
+                $user_email = limpiar_string(trim($_POST['user_email']));
+                if(email_existe($user_email)){
+                    $codigo_validacion = md5($user_email . microtime());
+                    setcookie("temp_access_code", $codigo_validacion, time() + 600);
+                    $query = query("UPDATE usuarios SET user_token = '{$codigo_validacion}' WHERE user_email = '{$user_email}'");
+                    confirmar($query);
+                    $asunto = "Por favor cambie su contraseña";
+                    $msj = "Por favor ingrese el siguiente codigo <strong>{$codigo_validacion}</strong> en el siguiente enlace:\n <a href='http://localhost/dw2021-3/04%20CMS/public/code.php?email={$user_email}&code={$codigo_validacion}' target='_blank'>Cambiar Contraseña</a>";
+                    if(!send_email($user_email, $asunto, $msj)){
+                        set_mensaje(display_danger_msj('El correo no se pudo enviar, intente más tarde'));
+                        redirect("forgot-password.php");
+                    }
+                    set_mensaje(display_success_msj("Tu código de autorización fue enviado a tu correo. Por favor revisa tu bandeja de entrada o de spam. Esto puede tardar algunos minutos"));
+                    redirect('forgot-password.php');
+                } else {
+                    set_mensaje(display_danger_msj('Este correo no existe'));
+                    redirect('forgot-password.php');
+                }
+            } else {
+                set_mensaje(display_danger_msj('Datos no validos'));
+                redirect('forgot-password.php');
+            }
+        }
+    }
+
     function validar_user_reg(){
         $min = 4;
         $max = 10;
@@ -728,6 +819,18 @@ DELIMITADOR;
             set_mensaje(display_success_msj('Usuario reactivado con exito'));
             redirect('index.php?desactivados');
         }
+    }
+    function show_canti_any_tabla($tabla){
+        $query = query("SELECT * FROM {$tabla}");
+        confirmar($query);
+        echo contar_filas($query);
+    }
+
+    function show_canti_total_vistas(){
+        $query = query("SELECT SUM(noti_vistas) AS vistas FROM noticias");
+        confirmar($query);
+        $fila = fetch_array($query);
+        echo $fila['vistas'];
     }
 
 ?>

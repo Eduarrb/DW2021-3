@@ -78,3 +78,9 @@ CREATE TABLE usuarios (
 )
 
 INSERT INTO usuarios (user_nombres, user_apellidos, user_email, user_pass, user_rol) VALUES ('Eduardo', 'Arroyo', 'eduardo@gmail.com', '123', 'admin')
+
+SELECT 
+    COUNT(*) AS cantidad,
+    MONTH(noti_fecha) as mes
+    FROM noticias
+        GROUP BY MONTH(noti_fecha)
