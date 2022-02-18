@@ -1,0 +1,23 @@
+https://m.do.co/c/14e79fc95961
+
+<VirtualHost *:80>
+        ServerName cms20213.xyz
+        ServerAlias cms20213.xyz
+        DocumentRoot /var/www/cms/public
+
+        DirectoryIndex index.php
+
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/cms/public>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride None
+                Order allow,deny
+                allow from all
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
